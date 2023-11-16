@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link } from 'react-router-dom'
 import Marquee from "react-fast-marquee";
+import ProductCard from '../components/ProductCard';
 
 function Home() {
   return (
@@ -113,6 +114,20 @@ function Home() {
       </div>
     </div>
    </section>
+   <section className="featured-wrapper  py-5 home-wrapper-2">
+    <div className="container-xxl">
+      <div className="row">
+        <div className="col-12">
+          <h3 className="section-heading">Featured Collection</h3>
+        </div>
+        <ProductCard />
+      <ProductCard />
+      <ProductCard />
+      <ProductCard />
+      </div>
+    </div>
+
+   </section>
    <section className="marque-wrapper py-5">
     <div className="container-xxl">
       <div className="row">
@@ -151,6 +166,7 @@ function Home() {
     </div>
 
    </section>
+  
    </>
   )
 }
