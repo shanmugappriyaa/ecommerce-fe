@@ -1,6 +1,9 @@
 import React from 'react'
 import BreadCrumb from '../components/BreadCrumb'
 import Meta from '../components/Meta'
+import { BiPhoneCall ,BiInfoCircle  } from "react-icons/bi";
+import { AiOutlineHome,AiOutlineMail } from "react-icons/ai";
+
 
 function Contact() {
   return (
@@ -35,6 +38,21 @@ function Contact() {
   </div>
 <div>
   <h3 className='contact-title mb-4'>Get in touch with us</h3>
+  
+  <ul className='ps-0'>
+    <li className='mb-3 d-flex gap-15 align-items-center'> <AiOutlineHome className='fs-5'/>
+    <address className='mb-0'>
+    Hno: 277, Near Vill chopal,sonipat,Haryana , Pincode:131103
+      </address></li>
+    <li className='mb-3 d-flex gap-15 align-items-center'><BiPhoneCall  className='fs-5'/>
+    <a href="tel:+91 9998887776">+91 9998887776</a></li>
+    <li className='mb-3 d-flex gap-15 align-items-center'><AiOutlineMail  className='fs-5'/>
+    <a href="mailto:pshanmu.priya@gmail.com">pshanmu.priya@gmail.com</a>
+    </li>
+    <li className='mb-3 d-flex gap-15 align-items-center'>
+      <BiInfoCircle className='fs-5' />
+      <p className='mb-0'>Monday - Friday  10AM -8PM</p></li>
+  </ul>
   </div>
           </div>
           </div>
