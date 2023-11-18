@@ -1,7 +1,10 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
-import cart from '../images/cart.svg'
+import cart from "../images/cart.svg";
+import whishlistImage from "../images/wishlist.svg";
+import userImage from '../images/user.svg'
+import menuImage from '../images/menu.svg'
 
 function Header() {
   return (
@@ -47,23 +50,32 @@ function Header() {
             <div className="col-5">
               <div className="header-upper-links d-flex align-items-center justify-content-between">
                 <div>
-                  <Link  to='/wishlist' className="d-flex align-items-center gap-10 text-white">
-                    <img src="images/whislist.svg" alt="wishlist" />
+                  <Link
+                    to="/wishlist"
+                    className="d-flex align-items-center gap-10 text-white"
+                  >
+                    <img src={whishlistImage} alt="wishlist" />
                     <p className="mb-0">
                       Favourites <br /> Wishlist
                     </p>
                   </Link>
                 </div>
                 <div>
-                  <Link to='/login' className="d-flex align-items-center gap-10 text-white">
-                    <img src="/images/user.svg" alt="user" />
+                  <Link
+                    to="/login"
+                    className="d-flex align-items-center gap-10 text-white"
+                  >
+                    <img src={userImage} alt="user" />
                     <p className="mb-0">
                       Log in <br /> My Account
                     </p>
                   </Link>
                 </div>
                 <div>
-                  <Link to='/cart' className="d-flex align-items-center gap-10 text-white">
+                  <Link
+                    to="/cart"
+                    className="d-flex align-items-center gap-10 text-white"
+                  >
                     <img src={cart} alt="cart" />
                     <div className="d-flex flex-column gap-10">
                       <span className="badge bg-white text-dark">0</span>
@@ -90,7 +102,7 @@ function Header() {
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      <img src="images/menu.svg" alt="menu" />
+                      <img src={menuImage} alt="menu" />
                       <span className="me-5 d-inline-block">
                         Shop Categories
                       </span>
