@@ -1,6 +1,8 @@
 import React from "react";
 import ReactStars from "react-rating-stars-component";
 import { Link, useLocation } from "react-router-dom";
+import wish from '../images/wish.svg'
+import watch from '../images/watch.jpg'
 
 function ProductCard(props) {
   let location = useLocation();
@@ -12,12 +14,12 @@ function ProductCard(props) {
       >
         <Link to='product/:id' className="product-card position-relative">
           <div className="wishlist-icon position-absolute">
-            <Link>
-              <img src="images/wish.svg" alt="wishlist" />
-            </Link>
+            <button className="border-0 bg-transparent">
+              <img src={wish} alt="wishlist" />
+            </button>
           </div>
           <div className="product-image">
-            <img src="images/watch.jpg" alt="product-img" />
+            <img src={watch} alt="product-img" />
           </div>
           <div className="product-details">
             <h6 className="brand">Havels</h6>
@@ -45,11 +47,11 @@ function ProductCard(props) {
         <Link className="product-card position-relative">
           <div className="wishlist-icon position-absolute">
             <Link>
-              <img src="images/wish.svg" alt="wishlist" />
+              <img src={wish} alt="wishlist" />
             </Link>
           </div>
           <div className="product-image">
-            <img src="images/watch.jpg" alt="product-img" />
+            <img src={watch} alt="product-img" />
           </div>
           <div className="product-details">
             <h6 className="brand">Havels</h6>

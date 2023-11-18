@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
+import cart from '../images/cart.svg'
 
 function Header() {
   return (
@@ -62,8 +63,8 @@ function Header() {
                   </Link>
                 </div>
                 <div>
-                  <Link className="d-flex align-items-center gap-10 text-white">
-                    <img src="/images/cart.svg" alt="cart" />
+                  <Link to='/cart' className="d-flex align-items-center gap-10 text-white">
+                    <img src={cart} alt="cart" />
                     <div className="d-flex flex-column gap-10">
                       <span className="badge bg-white text-dark">0</span>
                       <p className="mb-0">$ 500</p>

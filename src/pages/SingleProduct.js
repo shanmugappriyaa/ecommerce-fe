@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import ProductCard from '../components/ProductCard'
 import ReactImageZoom from 'react-image-zoom';
 import ReactStars from "react-rating-stars-component";
+import { AiOutlineHeart } from "react-icons/ai";
 
 function SingleProduct() {
   const props = 
@@ -42,7 +43,7 @@ function SingleProduct() {
             <p className='mb-0 t-review'>(2 Reviews)</p>
           </div>
         </div>
-        <div className="border-bottom">
+        <div className="border-bottom py-3">
           <div className='d-flex gap-10 align-items-center my-2'>
             <h3 className='product-heading'>Type</h3>
             <p className='product-data'>Watch</p>
@@ -71,7 +72,12 @@ function SingleProduct() {
             </div>
             <div className='d-flex align-items-center gap-30 ms-5'>
             <button className='button border-0'>Add to Cart</button>
-    <button className='button signup'>Add to wishlist</button>
+    <button className='button signup'>Buy it NOW</button>
+            </div>
+            <div className='d-flex align-items-center gap-15 '>
+<div>
+<a href=''><AiOutlineHeart className='fs-5 me-2'/> Add to Wishlist</a>
+</div>
             </div>
           </div>
         </div>
