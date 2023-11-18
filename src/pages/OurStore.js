@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import ReactStars from "react-rating-stars-component";
 import ProductCard from "../components/ProductCard";
 import Container from "../components/Container";
+import { useDispatch, useSelector } from "react-redux";
 
 function OurStore() {
   const [grid, setGrid] = useState(4);
+  const productState = useSelector((state)=>state.product.product)
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    getAllProducts()
+  },[])
+
+  const getProducts=()=>{
+    dispatch(getAllProducts)
+  }
 
   return (
     <>

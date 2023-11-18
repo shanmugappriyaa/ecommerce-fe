@@ -4,7 +4,7 @@ import Meta from "../components/Meta";
 import { Link } from "react-router-dom";
 import Container from "../components/Container";
 import * as Yup from "yup";
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../features/user/userSlice";
 
