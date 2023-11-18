@@ -4,14 +4,15 @@ import { Link } from "react-router-dom";
 import BreadCrumb from "../components/BreadCrumb";
 import watch from "../images/watch.jpg";
 import { AiFillDelete } from "react-icons/ai";
+import Container from "../components/Container";
 
 function Cart() {
   return (
     <>
       <Meta title={"Cart"} />
       <BreadCrumb title="Cart" />
-      <section className="cart-wrapper home-wrapper-2 py-5">
-        <div className="container-xxl">
+      <Container class1="cart-wrapper home-wrapper-2 py-5">
+      
           <div className="row align-items-center">
             <div className="col-12">
               <div className="cart-header py-3 d-flex justify-content-between align-items-center">
@@ -90,8 +91,8 @@ function Cart() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        
+      </Container>
     </>
   );
 }

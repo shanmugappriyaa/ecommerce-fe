@@ -1,10 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Container from './Container';
 
 function BreadCrumb(props) {
     const {title} = props;
-  return <div className='bread-crumb mb-0 py-4'>
-    <div className="container-xxl">
+  return<>
+    <Container className='bread-crumb mb-0 py-4'>
+  
         <div className="row">
             <div className="col-12">
                 <p className='text-center mb-0'>
@@ -12,8 +14,10 @@ function BreadCrumb(props) {
                / {title}</p>
             </div>
         </div>
-    </div>
-  </div>
+   
+  </Container>
+  </>
+ 
   
 }
 

@@ -6,6 +6,7 @@ import ProductCard from '../components/ProductCard'
 import ReactImageZoom from 'react-image-zoom';
 import ReactStars from "react-rating-stars-component";
 import { AiOutlineHeart } from "react-icons/ai";
+import Container from '../components/Container'
 
 function SingleProduct() {
   const props = 
@@ -15,8 +16,8 @@ function SingleProduct() {
 <>
 <Meta  title={"Product Name"} />
     <BreadCrumb title ='Product Name' />
-    <div className="main-product-wrapper home-wrapper-2 py-5">
-      <div className="container-xxl">
+    <Container className="main-product-wrapper home-wrapper-2 py-5">
+  
       <div className="row">
   <div className="col-6">
     <div className="main-product-image">
@@ -84,10 +85,22 @@ function SingleProduct() {
       </div>
     </div>
     </div>
+    </Container>
+    
+    <div className='bread-crumb mb-0 py-4'>
+    
+        <div className="row">
+            <div className="col-12">
+                <p className='text-center mb-0'>
+                    <Link to='/' className='text-dark'>Home  &nbsp;</Link>
+               / {title}</p>
+            </div>
+        </div>
     </div>
-    </div>
-    <div className="description-wrapper home-wrapper-2 py-5">
-      <div className="container-xxl">
+  
+
+    <Container class1="description-wrapper home-wrapper-2 py-5">
+      
       <div className="row">
   <div className="col-12">
   <h4>Description</h4>
@@ -100,10 +113,10 @@ function SingleProduct() {
 
     </div>
     </div>
-      </div>
-    </div>
-    <section className="review-wrapper home-wrapper-2 ">
-      <div className="container-xxl">
+      </Container>
+    
+    <Container class1="review-wrapper home-wrapper-2 ">
+     
       <div className="row">
   <div className="col-12">
     <h3>Reviews</h3>
@@ -128,10 +141,9 @@ function SingleProduct() {
   </div>
     </div>
     </div>
-      </div>
-    </section>
-    <section className="popular-wrapper home-wrapper-2 py-5">
-      <div className="container-xxl">
+    </Container>
+    <Container class1="popular-wrapper home-wrapper-2 py-5">
+      
       <div className="row">
   <div className="col-12">
     <h3 className="section-heading">
@@ -144,8 +156,8 @@ function SingleProduct() {
        
 
     </div>
-    </div>
-    </section>
+    
+    </Container>
 </>
   )
 }

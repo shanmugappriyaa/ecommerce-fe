@@ -7,7 +7,7 @@ function Header() {
   return (
     <>
       <header className="header-top-strip py-3">
-        <div className="container-xxl"></div>
+        {/* <div className="container-xxl"></div> */}
         <div className="row">
           <div className="col-6">
             <p className="text-white mb-0">Free shipping over $100</p>

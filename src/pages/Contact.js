@@ -3,6 +3,7 @@ import BreadCrumb from '../components/BreadCrumb'
 import Meta from '../components/Meta'
 import { BiPhoneCall ,BiInfoCircle  } from "react-icons/bi";
 import { AiOutlineHome,AiOutlineMail } from "react-icons/ai";
+import Container from '../components/Container';
 
 
 function Contact() {
@@ -10,8 +11,7 @@ function Contact() {
     <>
         <Meta  title={"Contact Us"} />
     <BreadCrumb title ='Contact Us' />
-    <div className="contact-wrapper py-5 home-wrapper-2">
-      <div className="container-xxl">
+    <Container class1="contact-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
           <div className="contact-inner-wrapper d-flex justify-content-between">
@@ -57,9 +57,8 @@ function Contact() {
           </div>
           </div>
         </div>
-      </div>
 
-    </div>
+    </Container>
     </>
 
   )
