@@ -14,11 +14,11 @@ function Checkout() {
         <h3 className='website-name'> Shanmart</h3>
         <nav style={{"--bs-breadcrumb-divider": ">"}} aria-label="breadcrumb">
   <ol className="breadcrumb">
-    <li className="breadcrumb-item">
-    <Link className='text-dark' to='/cart'>Cart</Link></li>&nbsp;/
-    <li className="breadcrumb-item">
+    <li className="breadcrumb-item total-price">
+    <Link className='text-dark total-price' to='/cart'>Cart</Link></li>&nbsp;/
+    <li className="breadcrumb-item total-price">
         <a href="#">Information</a></li>&nbsp;/
-    <li className="breadcrumb-item active" aria-current="page">Shipping</li>
+    <li className="breadcrumb-item total-price active" aria-current="page">Shipping</li>
   </ol>
 </nav>
 <h4 className="title">Contact Information</h4>
@@ -27,7 +27,7 @@ function Checkout() {
   <div class="col-md-8 mb-4">
     <div class="card mb-4">
       <div class="card-header py-3">
-        <h5 class="mb-0">Biling details</h5>
+        <h4 className="mb-3">Shipping Address</h4>
       </div>
       <div class="card-body">
         <form>
@@ -86,31 +86,38 @@ function Checkout() {
   </div>
   <div className="col-5">
     <div className='border-bottom py-4'>
-        <div className='d-flex  gap-10  align-items-center'>
+        <div className='d-flex  gap-10 mb-2 align-items-center'>
         <div className="w-75 d-flex gap-10">
             <div className="w-25 position-relative">
+                <span style={{top:"-10px",right:"2px"}}
+                className='badge bg-secondary text-white rounded-circle p-2 position-absolute'>
+                    1
+                </span>
             <img className='img-fluid' src={watch} alt='' />
         </div>
-        <h5 className='title'>gfrhjkh</h5>
+        <h5 className='total-price'>gfrhjkh</h5>
         <div>
         </div>
-            <h5 className='flex-grow-1'>$100</h5>
+        <div className='flex-grow-1'>
+        <h5 className='total'>$100</h5>
+        </div>
+            
         </div>
             </div> 
     </div>
     <div className='border-bottom py-4'>
     <div className='d-flex justify-content-between align-items-center'>
-        <p>Subtotal</p>
-        <p>$ 100</p>
+        <p className='total'>Subtotal</p>
+        <p className='total-price'>$ 100</p>
     </div>
     <div className='d-flex justify-content-between align-items-center'>
-        <p className='mb-0'>Shipping</p>
-        <p className='mb-0'>$ 100</p>
+        <p className='mb-0 total'>Shipping</p>
+        <p className='mb-0 total-price'>$ 100</p>
     </div>
     </div>
     <div className='d-flex justify-content-between align-items-center border-bottom py-4'>
-        <h4>Total</h4>
-        <h5>$ 10000</h5>
+        <h4 className='total'>Total</h4>
+        <h5 className='total-price'>$ 10000</h5>
     </div>
     </div>
     </div>

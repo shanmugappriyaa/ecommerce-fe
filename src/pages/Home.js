@@ -2,10 +2,12 @@ import React from 'react'
 import {Link } from 'react-router-dom'
 import Marquee from "react-fast-marquee";
 import ProductCard from '../components/ProductCard';
+import Container from '../components/Container';
 
 function Home() {
   return (
    <>
+   <Container></Container>
    <section className="home-wrapper-2 py-5">
 <div className="container-xxl">
   <div className="row">
