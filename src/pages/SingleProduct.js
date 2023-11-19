@@ -10,6 +10,8 @@ import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAProduct } from "../features/products/productSlice";
 
+import { addProdToCart } from "../features/user/userSlice";
+
 function SingleProduct() {
   const location = useLocation()
   const getProductId = location.pathname.split("/")[2]
@@ -20,7 +22,7 @@ function SingleProduct() {
     dispatch(getAProduct(getProductId))
   })
   const uploadCart =()=>{
-
+dispatch(addProdToCart({productId:productState?._id,quantity,price:productState?.price}))
   }
   const props = {
     width: 400,
@@ -100,7 +102,7 @@ function SingleProduct() {
                   </div>
                   <div className="d-flex align-items-center gap-30 ms-5">
                     <button className="button border-0"
-                    type = "button"  onClick={()=>{uploadCart({productState?._id})}}>
+                    type = "button"  onClick={()=>{uploadCart(productState?._id)}} >
                       Add to Cart</button>
                     <button className="button signup">Buy it NOW</button>
                   </div>

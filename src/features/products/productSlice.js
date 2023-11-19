@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { productService } from "./productService"
 
-
 export const getAllProducts = createAsyncThunk(
   "product/get",
   async (thunkAPI) => {
@@ -14,7 +13,7 @@ export const getAllProducts = createAsyncThunk(
 );
 export const getAProduct = createAsyncThunk(
   "product/getAProduct",
-  async (thunkAPI) => {
+  async (id,thunkAPI) => {
     try {
       return await productService.getSingleProduct(id)
     } catch (error) {
