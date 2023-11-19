@@ -4,11 +4,12 @@ import { Link, useLocation } from "react-router-dom";
 import wish from "../images/wish.svg";
 import watch from "../images/watch.jpg";
 import { useDispatch,useSelector } from "react-redux";
+import { addToWishlist } from "../features/products/productSlice";
 
 function ProductCard(props) {
   let location = useLocation();
   const dispatch = useDispatch()
-  const addToWishlist=(id)=>{
+  const addToWish=(id)=>{
 dispatch(addToWishlist)
   }
   const { grid, data } = props;
@@ -23,14 +24,15 @@ dispatch(addToWishlist)
             }`}
           >
             <Link
-              to={`${
-                location.pathname == "/"
-                  ? "/product/:id"
-                  : location.pathname == "/product/:id"
-                  ? "/product/:id"
-                  : ":id"
-              }`}
-            >
+              // to={`${
+              //   location.pathname == "/"
+              //     ? "/product/:id"
+              //     : location.pathname == "/product/:id"
+              //     ? "/product/:id"
+              //     : ":id"
+              // }`}
+              className="product-card position-relative"
+            > 
               <div className="wishlist-icon position-absolute">
                 <button className="border-0 bg-transparent" onClick={(e)=>{addToWishlist(item?._id)}}>
                   <img src={wish} alt="wishlist" />

@@ -1,11 +1,11 @@
 import React from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Container from "../components/Container";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {loginUser} from '../features/user/userSlice'
 
 const loginSchema = Yup.object({
@@ -17,7 +17,9 @@ const loginSchema = Yup.object({
     .min(6, "password should be minimum 6 char"),
 });
 function Login() {
+  const authState = useSelector(state => state.auth)
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -26,6 +28,11 @@ function Login() {
     },
     onSubmit: (values) => {
       dispatch(loginUser(values));
+      setTimeout(()=>{
+if(authState.isSuccess){
+  navigate('/')
+}
+      },300)
     },
     validationSchema: loginSchema,
   });
