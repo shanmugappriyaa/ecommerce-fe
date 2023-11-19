@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Marquee from "react-fast-marquee";
 import ProductCard from "../components/ProductCard";
@@ -16,8 +16,18 @@ import brand05 from '../images/brand-05.png'
 import brand06 from '../images/brand-06.png'
 import brand07 from '../images/brand-07.png'
 import brand08 from '../images/brand-08.png'
+import { useDispatch, useSelector } from "react-redux";
+import {getAllProducts} from "../features/products/productSlice"
 
 function Home() {
+  const dispatch = useDispatch();
+  useEffect(()=>{
+getallProducts()
+  },[])
+  const productState = useSelector((state)=> state?.product?.product)
+  const getallProducts = ()=>{
+   dispatch(getAllProducts())
+  }
   return (
     <>
       <Container class1="home-wrapper-2 py-5">
@@ -25,7 +35,6 @@ function Home() {
           <div className="col-12">
             <div className="services d-flex align-items-center justify-content-between">
               {services?.map((i, j) => {
-                console.log(i);
                 return (
                   <div className="d-flex align-items-center gap-15" key={j}>
                     <img src={i.image} alt="services" />
@@ -108,12 +117,16 @@ function Home() {
       <Container class1="featured-wrapper  py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
-            <h3 className="section-heading">Featured Collection</h3>
+          <h3 className="section-heading">Featured Collection</h3>
           </div>
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+            {productState && productState?.map((item,index)=>{
+              if(item.tags ==="popular"){
+                return(
+<ProductCard />
+                )
+              }
+            })}
+         
         </div>
       </Container>
       <Container class1="marque-wrapper py-5">

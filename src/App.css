@@ -447,3 +447,7 @@ border-color: transparent;
     font-size: 16px;
     color: var(--color-777777);
 }
+.error{
+    color: red;
+    font-size: 14px;
+}

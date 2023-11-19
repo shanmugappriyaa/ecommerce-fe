@@ -6,6 +6,7 @@ import Container from "../components/Container";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
+import {loginUser} from '../features/user/userSlice'
 
 const loginSchema = Yup.object({
   email: Yup.string()

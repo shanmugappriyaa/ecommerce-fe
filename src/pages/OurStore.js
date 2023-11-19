@@ -11,11 +11,11 @@ function OurStore() {
   const productState = useSelector((state)=>state?.product?.product)
   const dispatch = useDispatch();
   useEffect(()=>{
-    getAllProducts()
+    getProducts()
   },[])
 
   const getProducts=()=>{
-    dispatch(getAllProducts)
+    dispatch(getProducts)
   }
 
   return (

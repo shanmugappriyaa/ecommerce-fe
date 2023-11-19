@@ -23,6 +23,17 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
+export const getUserProductWishlist = createAsyncThunk(
+  "user/wishlist",
+  async (thunkAPI) => {
+    try {
+      return await authService.getuserWishlist();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 
 const getCustomerFromLocalStorage =localStorage.getItem("customer")
 ? JSON.parse(localStorage.getItem("customer"))
@@ -83,8 +94,23 @@ export const authSlice = createSlice({
         if (state.isError === true) {
           toast.error(action.error);
         }
-      });
+      })
+      .addCase(getUserProductWishlist.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getUserProductWishlist.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.wishlister = action.payload;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+          });
   },
 });
 
-export default productSlice.reducer;
+export default authSlice.reducer;
