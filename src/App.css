@@ -451,3 +451,8 @@ border-color: transparent;
     color: red;
     font-size: 14px;
 }
+
+.home-grid-icon{
+    width: 100px;
+    height: 100px;
+}

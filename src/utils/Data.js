@@ -4,6 +4,9 @@ import service03 from "../images/service-03.png";
 import service04 from "../images/service-04.png";
 import service05 from "../images/service-05.png";
 
+export const commonFile =
+  "https://res.cloudinary.com/dmq6qfdjs/image/upload/v1700501899/ovfxoidib4tqwga62osf.jpg";
+
 export const services = [
   {
     title: "Free Shipping",

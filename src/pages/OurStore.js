@@ -6,6 +6,7 @@ import ProductCard from "../components/ProductCard";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../features/products/productSlice";
+import { commonFile } from "../utils/Data";
 
 function OurStore() {
   const [grid, setGrid] = useState(4);
@@ -117,7 +118,7 @@ function OurStore() {
                   <div className="random-products mb-3 d-flex ">
                     <div className="w-50">
                       <img
-                        src="images/watch.jpg"
+                        src={commonFile}
                         className="img-fluid"
                         alt="watch"
                       />
@@ -139,7 +140,7 @@ function OurStore() {
                   <div className="random-products d-flex ">
                     <div className="w-50">
                       <img
-                        src="images/watch.jpg"
+                        src={commonFile}
                         className="img-fluid"
                         alt="watch"
                       />
@@ -189,7 +190,7 @@ function OurStore() {
                   <p className="totalproducts">21 Products</p>
                   <div className="d-flex gap-10 align-items-center grid">
                     <img
-                      src="images/gr4.svg"
+                      src={commonFile}
                       onClick={() => {
                         setGrid(3);
                       }}
@@ -197,7 +198,7 @@ function OurStore() {
                       alt="grid"
                     />
                     <img
-                      src="images/gr3.svg"
+                      src={commonFile}
                       onClick={() => {
                         setGrid(4);
                       }}
@@ -205,7 +206,7 @@ function OurStore() {
                       alt="grid"
                     />
                     <img
-                      src="images/gr3.svg"
+                      src={commonFile}
                       onClick={() => {
                         setGrid(6);
                       }}
@@ -213,7 +214,7 @@ function OurStore() {
                       alt="grid"
                     />
                     <img
-                      src="images/gr.svg"
+                      src={commonFile}
                       onClick={() => {
                         setGrid(12);
                       }}
