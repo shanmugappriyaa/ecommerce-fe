@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,7 +6,7 @@ import Container from "../components/Container";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import {loginUser} from '../features/user/userSlice'
+import { loginUser } from "../features/user/userSlice";
 
 const loginSchema = Yup.object({
   email: Yup.string()
@@ -17,7 +17,7 @@ const loginSchema = Yup.object({
     .min(6, "password should be minimum 6 char"),
 });
 function Login() {
-  const authState = useSelector(state => state.auth)
+  const authState = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const formik = useFormik({
@@ -28,14 +28,16 @@ function Login() {
     },
     onSubmit: (values) => {
       dispatch(loginUser(values));
-      setTimeout(()=>{
-if(authState.isSuccess){
-  navigate('/')
-}
-      },300)
     },
     validationSchema: loginSchema,
   });
+
+  useEffect(() => {
+    if (authState.isSuccess) {
+      navigate("/");
+    }
+  }, [authState]);
+
   return (
     <>
       <Meta title={"Login"} />
@@ -45,7 +47,11 @@ if(authState.isSuccess){
           <div className="col-12">
             <div className="auth-card">
               <h3 className="text-center mb-3">Login</h3>
-              <form action=""  onSubmit={formik.handleSubmit} className="d-flex flex-column gap-15">
+              <form
+                action=""
+                onSubmit={formik.handleSubmit}
+                className="d-flex flex-column gap-15"
+              >
                 <div>
                   <input
                     type="email"

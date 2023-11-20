@@ -28,7 +28,7 @@ function Contact() {
       comment: "",
     },
     onSubmit: (values) => {
-      dispatch(registerUser(values));
+      // dispatch(registerUser(values));
     },
     validationSchema: contactSchema,
   });

@@ -13,22 +13,30 @@ import { getAProduct } from "../features/products/productSlice";
 import { addProdToCart } from "../features/user/userSlice";
 
 function SingleProduct() {
-  const location = useLocation()
-  const getProductId = location.pathname.split("/")[2]
-  const[quantity,setQuantity]= useState(1)
-  const dispatch = useDispatch()
-  const productState = useSelector(state=>state.product.Singleproduct)
-  useEffect(()=>{
-    dispatch(getAProduct(getProductId))
-  })
-  const uploadCart =()=>{
-dispatch(addProdToCart({productId:productState?._id,quantity,price:productState?.price}))
-  }
+  const location = useLocation();
+  const getProductId = location.pathname.split("/")[2];
+  const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
+  const productState = useSelector((state) => state.product.Singleproduct);
+  useEffect(() => {
+    dispatch(getAProduct(getProductId));
+  });
+  const uploadCart = () => {
+    dispatch(
+      addProdToCart({
+        productId: productState?._id,
+        quantity,
+        price: productState?.price,
+      })
+    );
+  };
   const props = {
     width: 400,
     height: 600,
     zoomWidth: 600,
-    img:productState?.images[0]?.url ? productState?.images[0]?.url: "https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg",
+    img: productState?.images[0]?.url
+      ? productState?.images[0]?.url
+      : "https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg",
   };
 
   return (
@@ -47,9 +55,7 @@ dispatch(addProdToCart({productId:productState?._id,quantity,price:productState?
           <div className="col-6">
             <div className="main-product-details">
               <div className="border-bottom">
-                <h3 className="title">
-              {productState?.title}
-                </h3>
+                <h3 className="title">{productState?.title}</h3>
               </div>
               <div className="border-bottom py-3">
                 <p className="price">$ {productState?.price}</p>
@@ -96,14 +102,20 @@ dispatch(addProdToCart({productId:productState?._id,quantity,price:productState?
                       max={10}
                       style={{ width: "70px" }}
                       className="form-control"
-                      onChange={(e)=>setQuantity(e.target.value)}
+                      onChange={(e) => setQuantity(e.target.value)}
                       value={quantity}
                     />
                   </div>
                   <div className="d-flex align-items-center gap-30 ms-5">
-                    <button className="button border-0"
-                    type = "button"  onClick={()=>{uploadCart(productState?._id)}} >
-                      Add to Cart</button>
+                    <button
+                      className="button border-0"
+                      type="button"
+                      onClick={() => {
+                        uploadCart(productState?._id);
+                      }}
+                    >
+                      Add to Cart
+                    </button>
                     <button className="button signup">Buy it NOW</button>
                   </div>
                   <div className="d-flex align-items-center gap-15 ">
@@ -125,9 +137,7 @@ dispatch(addProdToCart({productId:productState?._id,quantity,price:productState?
           <div className="col-12">
             <h4>Description</h4>
             <div className="bg-white p-3">
-              <p>
-              {productState?.description}
-              </p>
+              <p>{productState?.description}</p>
             </div>
           </div>
         </div>

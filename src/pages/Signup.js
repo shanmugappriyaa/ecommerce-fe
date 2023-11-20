@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import Container from "../components/Container";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../features/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const signupSchema = Yup.object({
-  firstName: Yup.string().required("first Name is required "),
-  lastName: Yup.string().required("last Name is required "),
+  firstname: Yup.string().required("first Name is required "),
+  lastname: Yup.string().required("last Name is required "),
   mobile: Yup.string().required("mobile no is required "),
   email: Yup.string()
     .required("Email should not be empty")
@@ -20,20 +21,32 @@ const signupSchema = Yup.object({
 });
 
 function Signup() {
+  const navigate = useNavigate();
+  const authState = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
+      firstname: "",
+      lastname: "",
       email: "",
       mobile: "",
       password: "",
     },
     onSubmit: (values) => {
+      console.log(values);
       dispatch(registerUser(values));
     },
     validationSchema: signupSchema,
   });
+  useEffect(() => {
+    console.log(authState);
+    if (
+      (authState.user !== null && authState.isError === false) ||
+      authState.createUser
+    ) {
+      navigate("/login");
+    }
+  }, [authState]);
   return (
     <>
       <Meta title={"Signup"} />
@@ -45,35 +58,35 @@ function Signup() {
               <h3 className="text-center mb-3">Sign-Up</h3>
               <form
                 action=""
-                onSubmit={formik.handleSumbit}
+                onSubmit={formik.handleSubmit}
                 className="d-flex flex-column gap-15"
               >
                 <div>
                   <input
                     type="text"
-                    name="firstName"
+                    name="firstname"
                     placeholder=" First Name"
                     className="form-control"
-                    value={formik.values.firstName}
-                    onChange={formik.handleChange("firstName")}
-                    onBlur={formik.handleBlur("firstName")}
+                    value={formik.values.firstname}
+                    onChange={formik.handleChange("firstname")}
+                    onBlur={formik.handleBlur("firstname")}
                   />
                   <div className="error">
-                    {formik.touched.firstName && formik.errors.firstName}
+                    {formik.touched.firstname && formik.errors.firstname}
                   </div>
                 </div>
                 <div>
                   <input
                     type="text"
-                    name="lastName"
+                    name="lastname"
                     placeholder="Last Name"
                     className="form-control"
-                    value={formik.values.lastName}
-                    onChange={formik.handleChange("lastName")}
-                    onBlur={formik.handleBlur("lastName")}
+                    value={formik.values.lastname}
+                    onChange={formik.handleChange("lastname")}
+                    onBlur={formik.handleBlur("lastname")}
                   />
                   <div className="error">
-                    {formik.touched.lastName && formik.errors.lastName}
+                    {formik.touched.lastname && formik.errors.lastname}
                   </div>
                 </div>
                 <div>

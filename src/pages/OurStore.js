@@ -5,18 +5,20 @@ import ReactStars from "react-rating-stars-component";
 import ProductCard from "../components/ProductCard";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
+import { getAllProducts } from "../features/products/productSlice";
 
 function OurStore() {
   const [grid, setGrid] = useState(4);
-  const productState = useSelector((state)=>state?.product?.product)
+  const productState = useSelector((state) => state?.product?.product);
+  const { product } = productState;
   const dispatch = useDispatch();
-  useEffect(()=>{
-    getProducts()
-  },[])
+  useEffect(() => {
+    getProducts();
+  }, []);
 
-  const getProducts=()=>{
-    dispatch(getProducts)
-  }
+  const getProducts = () => {
+    dispatch(getAllProducts());
+  };
 
   return (
     <>
@@ -167,12 +169,14 @@ function OurStore() {
                   <p className="mb-0 d-block" style={{ width: "100px" }}>
                     Sort By:
                   </p>
-                  <select name="" 
-                  defaultValue= {"manual"} className="form-control form-select" id="">
+                  <select
+                    name=""
+                    defaultValue={"manual"}
+                    className="form-control form-select"
+                    id=""
+                  >
                     <option value="manual">Featured</option>
-                    <option value="best-selling">
-                      Best Selling
-                    </option>
+                    <option value="best-selling">Best Selling</option>
                     <option value="title-ascending">Alphabetically A-Z</option>
                     <option value="price-ascending">price low to high</option>
                     <option value="price-descending">price high to low</option>
@@ -222,8 +226,10 @@ function OurStore() {
             </div>
             <div className="products-list pb-5">
               <div className="d-flex gap-10 flex-wrap">
-                <ProductCard data={productState ? productState:[]} 
-                grid={grid} />
+                <ProductCard
+                  data={product ? product : []}
+                  grid={grid}
+                />
               </div>
             </div>
           </div>

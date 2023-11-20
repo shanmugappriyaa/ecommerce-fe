@@ -3,15 +3,15 @@ import ReactStars from "react-rating-stars-component";
 import { Link, useLocation } from "react-router-dom";
 import wish from "../images/wish.svg";
 import watch from "../images/watch.jpg";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToWishlist } from "../features/products/productSlice";
 
 function ProductCard(props) {
   let location = useLocation();
-  const dispatch = useDispatch()
-  const addToWish=(id)=>{
-dispatch(addToWishlist)
-  }
+  const dispatch = useDispatch();
+  const addToWish = (id) => {
+    dispatch(addToWishlist);
+  };
   const { grid, data } = props;
   return (
     <>
@@ -32,26 +32,31 @@ dispatch(addToWishlist)
               //     : ":id"
               // }`}
               className="product-card position-relative"
-            > 
+            >
               <div className="wishlist-icon position-absolute">
-                <button className="border-0 bg-transparent" onClick={(e)=>{addToWishlist(item?._id)}}>
+                <button
+                  className="border-0 bg-transparent"
+                  onClick={(e) => {
+                    addToWishlist(item?._id);
+                  }}
+                >
                   <img src={wish} alt="wishlist" />
                 </button>
               </div>
               <div className="product-image">
-                <img src={item?.images[0].url} 
-                className ="img-fluid d-block mx-auto "
-                alt="product-img" />
+                <img
+                  src={item?.images?.[0]?.url}
+                  className="img-fluid d-block mx-auto "
+                  alt="product-img"
+                />
               </div>
               <div className="product-details">
                 <h6 className="brand">{item?.brand}</h6>
-                <h5 className="product-title">
-                 {item?.title}
-                </h5>
+                <h5 className="product-title">{item?.title}</h5>
                 <ReactStars
                   count={5}
                   size={24}
-                  value={item?.totalrating.toString()}
+                  value={item?.totalrating?.toString()}
                   edit={false}
                   activeColor="#ffd700"
                 />

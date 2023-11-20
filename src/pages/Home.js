@@ -7,33 +7,36 @@ import Marquee from "react-fast-marquee";
 import ProductCard from "../components/ProductCard";
 import Container from "../components/Container";
 import { services } from "../utils/Data";
-import camera from '../images/camera.jpg'
-import tv from '../images/tv.jpg'
-import watch from '../images/watch.jpg'
-import headphone from '../images/headphone.jpg'
-import brand01 from '../images/brand-01.png'
-import brand02 from '../images/brand-02.png'
-import brand03 from '../images/brand-03.png'
-import brand04 from '../images/brand-04.png'
-import brand05 from '../images/brand-05.png'
-import brand06 from '../images/brand-06.png'
-import brand07 from '../images/brand-07.png'
-import brand08 from '../images/brand-08.png'
+import camera from "../images/camera.jpg";
+import tv from "../images/tv.jpg";
+import watch from "../images/watch.jpg";
+import headphone from "../images/headphone.jpg";
+import brand01 from "../images/brand-01.png";
+import brand02 from "../images/brand-02.png";
+import brand03 from "../images/brand-03.png";
+import brand04 from "../images/brand-04.png";
+import brand05 from "../images/brand-05.png";
+import brand06 from "../images/brand-06.png";
+import brand07 from "../images/brand-07.png";
+import brand08 from "../images/brand-08.png";
 import { useDispatch, useSelector } from "react-redux";
-import {getAllProducts} from "../features/products/productSlice"
+import { getAllProducts } from "../features/products/productSlice";
 
 function Home() {
   const dispatch = useDispatch();
-  useEffect(()=>{
-getallProducts()
-  },[])
-  const productState = useSelector((state)=> state?.product?.product)
-  const getallProducts = ()=>{
-   dispatch(getAllProducts())
-  }
-  const addToWish=(id)=>{
-    dispatch(addToWishlist)
-      }
+  useEffect(() => {
+    getallProducts();
+  }, []);
+  const productState = useSelector((state) => state?.product?.product);
+  const { product } = productState;
+
+  const getallProducts = () => {
+    dispatch(getAllProducts());
+  };
+  const addToWish = (id) => {
+    dispatch(addToWishlist(id));
+  };
+
   return (
     <>
       <Container class1="home-wrapper-2 py-5">
@@ -123,55 +126,48 @@ getallProducts()
       <Container class1="featured-wrapper  py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
-          <h3 className="section-heading">Featured Collection</h3>
+            <h3 className="section-heading">Featured Collection</h3>
           </div>
-            {productState && productState?.map((item,index)=>{
-              if(item.tags ==="featured"){
-                return(
-                  <div
-                  key={index}
-                  className= "col-3"
-                >
-                  <Link
-                    // to={`${
-                    //   location.pathname == "/"
-                    //     ? "/product/:id"
-                    //     : location.pathname == "/product/:id"
-                    //     ? "/product/:id"
-                    //     : ":id"
-                    // }`}
-                    className="product-card position-relative"
-                  > 
-                    <div className="wishlist-icon position-absolute">
-                      <button className="border-0 bg-transparent" onClick={(e)=>{addToWishlist(item?._id)}}>
-                        <img src={wish} alt="wishlist" />
-                      </button>
-                    </div>
-                    <div className="product-image">
-                      <img src={item?.images[0].url} 
-                      className ="img-fluid d-block mx-auto "
-                      alt="product-img" />
-                    </div>
-                    <div className="product-details">
-                      <h6 className="brand">{item?.brand}</h6>
-                      <h5 className="product-title">
-                       {item?.title}
-                      </h5>
-                      <ReactStars
-                        count={5}
-                        size={24}
-                        value={item?.totalrating.toString()}
-                        edit={false}
-                        activeColor="#ffd700"
-                      />
-                    <p className="Price">$ {item?.price}</p>
-                    </div>
-                  </Link>
-                </div>
-                )
+          {product &&
+            product?.map((item, index) => {
+              if (item) {
+                return (
+                  <div key={index} className="col-3">
+                    <Link className="product-card position-relative">
+                      <div className="wishlist-icon position-absolute">
+                        <button
+                          className="border-0 bg-transparent"
+                          onClick={(e) => {
+                            addToWish(item?._id);
+                          }}
+                        >
+                          <img src={wish} alt="wishlist" />
+                        </button>
+                      </div>
+                      <div className="product-image">
+                        <img
+                          src={item?.images?.[0]?.url}
+                          className="img-fluid d-block mx-auto "
+                          alt="product-img"
+                        />
+                      </div>
+                      <div className="product-details">
+                        <h6 className="brand">{item?.brand}</h6>
+                        <h5 className="product-title">{item?.title}</h5>
+                        <ReactStars
+                          count={5}
+                          size={24}
+                          value={item?.totalrating?.toString()}
+                          edit={false}
+                          activeColor="#ffd700"
+                        />
+                        <p className="Price">$ {item?.price}</p>
+                      </div>
+                    </Link>
+                  </div>
+                );
               }
             })}
-         
         </div>
       </Container>
       <Container class1="marque-wrapper py-5">
@@ -189,7 +185,7 @@ getallProducts()
                   <img src={brand03} alt="brand" />
                 </div>
                 <div className="mx-4 w-25">
-                  <img src={brand04}alt="brand" />
+                  <img src={brand04} alt="brand" />
                 </div>
                 <div className="mx-4 w-25">
                   <img src={brand05} alt="brand" />
