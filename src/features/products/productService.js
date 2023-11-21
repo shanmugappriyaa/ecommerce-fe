@@ -2,9 +2,9 @@ import axios from "axios";
 import { base_url, config } from "../../utils/axiosConfig";
 
 const getProducts = async (data) => {
-  const url = `${base_url}product?${data?.brand ? `brand=${data?.brand}&&` : ""}
+  const url = `${base_url}product?${data?.brand?._id ? `brand=${data?.brand?._id}&&` : ""}
   ${data?.tag ? `tags=${data?.tag}&&` : ""}${
-    data?.category ? `category=${data?.category}&&` : ""
+    data?.category?._id ? `category=${data?.category?._id}&&` : ""
   }${data?.minPrice ? `price[gte]=${data?.minPrice}&&` : ""}
   ${data?.maxPrice ? `price[lte]=${data?.maxPrice}&&` : ""}`;
   const response = await axios.get(url);

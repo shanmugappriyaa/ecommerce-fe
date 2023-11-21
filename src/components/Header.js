@@ -48,7 +48,9 @@ function Header() {
           <div className="row align-items-center">
             <div className="col-2">
               <h2>
-                <Link className="text-white">ShanMart</Link>
+                <Link className="text-white">
+                  <span className="shan-txt">Shan</span>Mart
+                </Link>
               </h2>
             </div>
             <div className="col-5">

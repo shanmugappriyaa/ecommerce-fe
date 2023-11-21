@@ -6,7 +6,10 @@ import ProductCard from "../components/ProductCard";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../features/products/productSlice";
-import { commonFile } from "../utils/Data";
+import { CiGrid2V } from "react-icons/ci";
+import { CiGrid31 } from "react-icons/ci";
+import { CiGrid41 } from "react-icons/ci";
+import { MdCheckBoxOutlineBlank } from "react-icons/md";
 
 function OurStore() {
   const [grid, setGrid] = useState(4);
@@ -235,40 +238,38 @@ function OurStore() {
                 </div>
 
                 <div className="d-flex gap-10 align-items-center ">
-                  <p className="totalproducts">21 Products</p>
+                  <label className="totalproducts">
+                    {product ? product.length : 0} Products
+                  </label>
                   <div className="d-flex gap-10 align-items-center grid">
-                    <img
-                      src={commonFile}
-                      onClick={() => {
-                        setGrid(3);
-                      }}
-                      className="d-block img-fluid"
-                      alt="grid"
-                    />
-                    <img
-                      src={commonFile}
-                      onClick={() => {
-                        setGrid(4);
-                      }}
-                      className="d-block img-fluid"
-                      alt="grid"
-                    />
-                    <img
-                      src={commonFile}
-                      onClick={() => {
-                        setGrid(6);
-                      }}
-                      className="d-block img-fluid"
-                      alt="grid"
-                    />
-                    <img
-                      src={commonFile}
-                      onClick={() => {
-                        setGrid(12);
-                      }}
-                      className="d-block img-fluid"
-                      alt="grid"
-                    />{" "}
+                    <div className="grid-div">
+                      <CiGrid41
+                        onClick={() => {
+                          setGrid(3);
+                        }}
+                      />
+                    </div>
+                    <div className="grid-div">
+                      <CiGrid31
+                        onClick={() => {
+                          setGrid(4);
+                        }}
+                      />
+                    </div>
+                    <div className="grid-div">
+                      <CiGrid2V
+                        onClick={() => {
+                          setGrid(6);
+                        }}
+                      />
+                    </div>
+                    <div className="grid-div">
+                      <MdCheckBoxOutlineBlank
+                        onClick={() => {
+                          setGrid(12);
+                        }}
+                      />
+                    </div>{" "}
                   </div>
                 </div>
               </div>

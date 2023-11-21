@@ -123,7 +123,7 @@ function Home() {
           </div>
           {product &&
             product?.map((item, index) => {
-              if (item) {
+              if (item?.tags === "feature") {
                 return (
                   <div key={index} className="col-3 mb-5">
                     <div className="product-card card position-relative">
@@ -149,7 +149,7 @@ function Home() {
                         to={`/product/${item._id}`}
                         className="product-details"
                       >
-                        <h6 className="brand">{item?.brand}</h6>
+                        <h6 className="brand">{item?.brand?.title}</h6>
                         <h5 className="product-title">{item?.title}</h5>
                         <ReactStars
                           count={5}

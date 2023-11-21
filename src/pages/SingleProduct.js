@@ -6,9 +6,9 @@ import ReactImageZoom from "react-image-zoom";
 import ReactStars from "react-rating-stars-component";
 import { AiOutlineHeart } from "react-icons/ai";
 import Container from "../components/Container";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAProduct } from "../features/products/productSlice";
+import { addToWishlist, getAProduct } from "../features/products/productSlice";
 
 import { addProdToCart } from "../features/user/userSlice";
 
@@ -23,6 +23,8 @@ function SingleProduct() {
     (state) => state?.product?.singleproduct?.product
   );
   const cartState = useSelector((state) => state?.auth?.cartProduct);
+  const productListState = useSelector((state) => state?.product?.product);
+  const { product } = productListState;
   useEffect(() => {
     dispatch(getAProduct(getProductId));
   }, []);
@@ -53,6 +55,10 @@ function SingleProduct() {
     img: productState?.images[0]?.url
       ? productState?.images[0]?.url
       : "https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg",
+  };
+
+  const addToWish = (id) => {
+    dispatch(addToWishlist(id));
   };
 
   return (
@@ -93,12 +99,14 @@ function SingleProduct() {
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
                   <label className="product-heading">Brand</label>
-                  <label className="product-data">{productState?.brand}</label>
+                  <label className="product-data">
+                    {productState?.brand?.title}
+                  </label>
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
                   <label className="product-heading">Categories</label>
                   <label className="product-data">
-                    {productState?.category}
+                    {productState?.category?.title}
                   </label>
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
@@ -205,7 +213,50 @@ function SingleProduct() {
           </div>
         </div>
         <div className="row">
-          <ProductCard />
+          {product &&
+            product?.map((item, index) => {
+              if (item?.tags === "popular") {
+                return (
+                  <div key={index} className="col-3 mb-5">
+                    <div className="product-card card position-relative">
+                      <div className="wishlist-icon position-absolute">
+                        <button
+                          className="border-0 bg-transparent"
+                          onClick={(e) => {
+                            addToWish(item?._id);
+                          }}
+                        >
+                          {/* <img src={wish} alt="wishlist" /> */}
+                          <AiOutlineHeart />
+                        </button>
+                      </div>
+                      <div className="product-image">
+                        <img
+                          src={item?.images?.[0]?.url}
+                          className="img-fluid d-block mx-auto "
+                          alt="product-img"
+                        />
+                      </div>
+                      <Link
+                        to={`/product/${item._id}`}
+                        className="product-details"
+                      >
+                        <h6 className="brand">{item?.brand?.title}</h6>
+                        <h5 className="product-title">{item?.title}</h5>
+                        <ReactStars
+                          count={5}
+                          size={24}
+                          value={item?.totalrating?.toString()}
+                          edit={false}
+                          activeColor="#ffd700"
+                        />
+                        <p className="Price">$ {item?.price}</p>
+                      </Link>
+                    </div>
+                  </div>
+                );
+              }
+            })}
         </div>
       </Container>
     </>
