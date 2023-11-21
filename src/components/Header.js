@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
-import cart from "../images/cart.svg";
-import whishlistImage from "../images/wishlist.svg";
-import userImage from "../images/user.svg";
-import menuImage from "../images/menu.svg";
+import { BsCart4 } from "react-icons/bs";
+import { RxDropdownMenu } from "react-icons/rx";
+import { AiOutlineHeart } from "react-icons/ai";
+import { BiUserCircle } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 
 function Header() {
@@ -72,7 +72,8 @@ function Header() {
                     to="/wishlist"
                     className="d-flex align-items-center gap-10 text-white"
                   >
-                    <img src={whishlistImage} alt="wishlist" />
+                    {/* <img src={whishlistImage} alt="wishlist" /> */}
+                    <AiOutlineHeart />
                     <p className="mb-0">
                       Favourites <br /> Wishlist
                     </p>
@@ -83,7 +84,8 @@ function Header() {
                     to={authState?.user===null ? "/login" :""}
                     className="d-flex align-items-center gap-10 text-white"
                   >
-                    <img src={userImage} alt="user" />
+                    {/* <img src={userImage} alt="user" /> */}
+                    <BiUserCircle />
                     {
                       authState?.user===null ? <p className="mb-0">
                       Log in <br /> My Account</p>
@@ -100,7 +102,7 @@ function Header() {
                     to="/cart"
                     className="d-flex align-items-center gap-10 text-white"
                   >
-                    <img src={cart} alt="cart" />
+                    <BsCart4 />
                     <div className="d-flex flex-column gap-10">
                       <span className="badge bg-white text-dark">
                         {cartState?.length ? cartState?.length : 0}
@@ -128,7 +130,9 @@ function Header() {
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      <img src={menuImage} alt="menu" />
+                      {/* <img src={menuImage} alt="menu" /> */}
+                      <RxDropdownMenu />
+
                       <span className="me-5 d-inline-block">
                         Shop Categories
                       </span>

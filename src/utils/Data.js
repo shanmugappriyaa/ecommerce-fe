@@ -1,8 +1,10 @@
-import service01 from "../images/service.png";
-import service02 from "../images/service-02.png";
-import service03 from "../images/service-03.png";
-import service04 from "../images/service-04.png";
-import service05 from "../images/service-05.png";
+import { LiaShippingFastSolid } from "react-icons/lia";
+
+import { BsGift } from "react-icons/bs";
+import { PiHeadset } from "react-icons/pi";
+import { BiSolidOffer } from "react-icons/bi";
+
+import { BsCreditCard } from "react-icons/bs";
 
 export const commonFile =
   "https://res.cloudinary.com/dmq6qfdjs/image/upload/v1700501899/ovfxoidib4tqwga62osf.jpg";
@@ -11,27 +13,27 @@ export const services = [
   {
     title: "Free Shipping",
     tagline: "From all orders over $5",
-    image: service01,
+    image: <LiaShippingFastSolid />,
   },
 
   {
     title: "Daily Surprise Offers",
     tagline: "save upto 25% OFF",
-    image: service02,
+    image: <BsGift />,
   },
   {
     title: "Support 24/7",
     tagline: "Shop with an Expert",
-    image: service03,
+    image: <PiHeadset />,
   },
   {
     title: "Affordable Prices",
     tagline: "Get Factory Default Price",
-    image: service04,
+    image: <BiSolidOffer />,
   },
   {
     title: "Secure Payment",
     tagline: "100% Protected Payment",
-    image: service05,
+    image: <BsCreditCard />,
   },
 ];

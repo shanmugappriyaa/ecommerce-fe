@@ -65,40 +65,7 @@ function Wishlist() {
               );
             })}
 
-          {/* <div className="col-3">
-                <div className="wishlist-card">
-                  <img src='images/cross.svg' alt='cross'
-                  className='position-absoulte cross img-fluid'/>
-                  <div className="wishlist-card-image">
-                  <img src='images/watch.jpg' alt='watch'
-                  className=' w-100 img-fluid'/>
-                  </div>
-                  <div className='py-3 px-3'>
-                  <h5 className="title">
-                    Apple Watch Series 9 Stainless SteelComes with GPS + Cellular
-</h5>
-                  <h6 className="price">$100</h6>
-                  </div>
-                 
-                </div>
-              </div>
-              <div className="col-3">
-                <div className="wishlist-card">
-                  <img src='images/cross.svg' alt='cross'
-                  className='position-absoulte cross img-fluid'/>
-                  <div className="wishlist-card-image">
-                  <img src='images/watch.jpg' alt='watch'
-                  className=' w-100 img-fluid'/>
-                  </div>
-                  <div className='py-3 px-3'>
-                  <h5 className="title">
-                    Apple Watch Series 9 Stainless SteelComes with GPS + Cellular
-</h5>
-                  <h6 className="price">$100</h6>
-                  </div>
-                 
-                </div>
-              </div> */}
+    
         </div>
       </Container>
     </>

@@ -10,15 +10,38 @@ import { commonFile } from "../utils/Data";
 
 function OurStore() {
   const [grid, setGrid] = useState(4);
+  const [brands, setBrands] = useState([]);
+  const [catagories, setCatagories] = useState([]);
+  const [tags, setTags] = useState([]);
+  //filer
+  const [catagory, setCatagory] = useState(null);
+  const [tag, setTag] = useState(null);
+  const [brand, setBrand] = useState(null);
+  const [minprice, setMinPrice] = useState(null);
+  const [maxprice, setMaxPrice] = useState(null);
+
   const productState = useSelector((state) => state?.product?.product);
   const { product } = productState;
   const dispatch = useDispatch();
   useEffect(() => {
     getProducts();
-  }, []);
-
+  }, [tag, brand, catagory, minprice, maxprice]);
+  useEffect(() => {
+    let newBrands = [];
+    let category = [];
+    let newtags = [];
+    for (let i = 0; i < productState.length; i++) {
+      const element = productState[i];
+      newBrands.push(element.brand);
+      category.push(element.category);
+      newtags.push(element.tags);
+    }
+    setBrands(newBrands);
+    setBrands(catagories);
+    setTags(newtags);
+  }, [productState]);
   const getProducts = () => {
-    dispatch(getAllProducts());
+    dispatch(getAllProducts(tag, brand, catagory, minprice, maxprice));
   };
 
   return (
@@ -32,10 +55,15 @@ function OurStore() {
               <h3 className="filter-title">Shop By Categories</h3>
               <div>
                 <ul className="ps-0">
-                  <li>Watch</li>
-                  <li>TV</li>
-                  <li>Camera</li>
-                  <li>Laptop</li>
+                  {catagories &&
+                    [...new Set(catagories)].map((item, index) => {
+                      return (
+                        <li key={index} onClick={() => setCatagory(item)}>
+                          {" "}
+                          {item}
+                        </li>
+                      );
+                    })}
                 </ul>
               </div>
             </div>
@@ -79,6 +107,7 @@ function OurStore() {
                       className="form-control"
                       id="floatingInput"
                       placeholder="from"
+                      onChange={(e) => setMinPrice(e.target.value)}
                     />
                     <label htmlFor="floatingInput">From</label>
                   </div>
@@ -88,31 +117,52 @@ function OurStore() {
                       className="form-control"
                       id="floatingInput1"
                       placeholder="to"
+                      onChange={(e) => setMaxPrice(e.target.value)}
                     />
                     <label htmlFor="floatingInput">To</label>
                   </div>
                 </div>
               </div>
               <div className="filter-card mb-3">
-                <h3 className="filter-title">Product tags</h3>
+                <h3 className="filter-title">Product Brands</h3>
                 <div>
                   <div className="product-tags d-flex flex-wrap align-items-center gap-10">
-                    <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                      HeadPhone
-                    </span>
-                    <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                      Laptops
-                    </span>
-                    <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                      Watches
-                    </span>
-                    <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                      Mobile
-                    </span>
+                    {brands &&
+                      [...new Set(brands)].map((item, index) => {
+                        return (
+                          <span
+                            onClick={() => setBrand(item)}
+                            key={index}
+                            className="badge bg-light text-secondary rounded-3 py-2 px-3"
+                          >
+                            {item}
+                          </span>
+                        );
+                      })}
                   </div>
                 </div>
               </div>
+
               <div className="filter-card mb-3">
+                <h3 className="filter-title">Product tags</h3>
+                <div>
+                  <div className="product-tags d-flex flex-wrap align-items-center gap-10">
+                    {tags &&
+                      [...new Set(tags)].map((item, index) => {
+                        return (
+                          <span
+                            onClick={() => setTag(item)}
+                            key={index}
+                            className="badge bg-light text-secondary rounded-3 py-2 px-3"
+                          >
+                            {item}
+                          </span>
+                        );
+                      })}
+                  </div>
+                </div>
+              </div>
+              {/* <div className="filter-card mb-3">
                 <h3 className="filter-title">Random Product</h3>
                 <div>
                   <div className="random-products mb-3 d-flex ">
@@ -160,7 +210,7 @@ function OurStore() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="col-9">
@@ -176,8 +226,6 @@ function OurStore() {
                     className="form-control form-select"
                     id=""
                   >
-                    <option value="manual">Featured</option>
-                    <option value="best-selling">Best Selling</option>
                     <option value="title-ascending">Alphabetically A-Z</option>
                     <option value="price-ascending">price low to high</option>
                     <option value="price-descending">price high to low</option>
@@ -227,10 +275,7 @@ function OurStore() {
             </div>
             <div className="products-list pb-5">
               <div className="d-flex gap-10 flex-wrap">
-                <ProductCard
-                  data={product ? product : []}
-                  grid={grid}
-                />
+                <ProductCard data={product ? product : []} grid={grid} />
               </div>
             </div>
           </div>

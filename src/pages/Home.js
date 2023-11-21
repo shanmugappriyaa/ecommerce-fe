@@ -1,24 +1,17 @@
 import React, { useEffect } from "react";
 import ReactStars from "react-rating-stars-component";
-import { Link, useLocation } from "react-router-dom";
-import wish from "../images/wish.svg";
+import { Link } from "react-router-dom";
+
 import { addToWishlist } from "../features/products/productSlice";
 import Marquee from "react-fast-marquee";
 import ProductCard from "../components/ProductCard";
 import Container from "../components/Container";
 import { services } from "../utils/Data";
-import camera from "../images/camera.jpg";
-import tv from "../images/tv.jpg";
-import watch from "../images/watch.jpg";
-import headphone from "../images/headphone.jpg";
-import brand01 from "../images/brand-01.png";
-import brand02 from "../images/brand-02.png";
-import brand03 from "../images/brand-03.png";
-import brand04 from "../images/brand-04.png";
-import brand05 from "../images/brand-05.png";
-import brand06 from "../images/brand-06.png";
-import brand07 from "../images/brand-07.png";
-import brand08 from "../images/brand-08.png";
+
+import { AiOutlineCamera } from "react-icons/ai";
+import { GiWatch } from "react-icons/gi";
+
+
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../features/products/productSlice";
 
@@ -46,7 +39,8 @@ function Home() {
               {services?.map((i, j) => {
                 return (
                   <div className="d-flex align-items-center gap-15" key={j}>
-                    <img src={i.image} alt="services" />
+                    {/* <img src={i.image} alt="services" /> */}
+                    {i.image}
                     <div>
                       <h6>{i.title}</h6>
                       <p className="mb-0">{i.tagline}</p>
@@ -68,56 +62,56 @@ function Home() {
                   <h6>Camera</h6>
                   <p>10items</p>
                 </div>
-                <img src={camera} alt="camera" />
+                <GiWatch/>
               </div>
               <div className="d-flex  align-items-center">
                 <div>
                   <h6>Smart Tv</h6>
                   <p>10items</p>
                 </div>
-                <img src={tv} alt="camera" />
+      <AiOutlineCamera />
               </div>
               <div className="d-flex  align-items-center">
                 <div>
                   <h6>Smart Watches</h6>
                   <p>10items</p>
                 </div>
-                <img src={watch} alt="camera" />
+                <GiWatch/>
               </div>
               <div className="d-flex  align-items-center">
                 <div>
                   <h6>Music & Gaming</h6>
                   <p>10items</p>
                 </div>
-                <img src={headphone} alt="camera" />
+                <AiOutlineCamera />
               </div>
               <div className="d-flex  align-items-center">
                 <div>
                   <h6>Camera</h6>
                   <p>10items</p>
                 </div>
-                <img src={camera} alt="camera" />
+                <GiWatch/>
               </div>
               <div className="d-flex  align-items-center">
                 <div>
                   <h6>Smart Tv</h6>
                   <p>10items</p>
                 </div>
-                <img src={tv} alt="TV" />
+                <AiOutlineCamera />
               </div>
               <div className="d-flex  align-items-center">
                 <div>
                   <h6>Smart Tv</h6>
                   <p>10items</p>
                 </div>
-                <img src={tv} alt="camera" />
+                <GiWatch/>
               </div>
               <div className="d-flex  align-items-center">
                 <div>
                   <h6>Smart Tv</h6>
                   <p>10items</p>
                 </div>
-                <img src={tv} alt="camera" />
+                <AiOutlineCamera />
               </div>
             </div>
           </div>
@@ -170,7 +164,7 @@ function Home() {
             })}
         </div>
       </Container>
-      <Container class1="marque-wrapper py-5">
+      {/* <Container class1="marque-wrapper py-5">
         <div className="row">
           <div className="col-12">
             <div className="marquee-inner-wrapper card-wrapper">
@@ -203,7 +197,7 @@ function Home() {
             </div>
           </div>
         </div>
-      </Container>
+      </Container> */}
     </>
   );
 }

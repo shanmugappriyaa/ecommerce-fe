@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import Meta from "../components/Meta";
 import { Link } from "react-router-dom";
 import BreadCrumb from "../components/BreadCrumb";
-import watch from "../images/watch.jpg";
+
 import { AiFillDelete } from "react-icons/ai";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserCart } from "../features/user/userSlice";
-
+import { GiWatch } from "react-icons/gi";
 function Cart() {
   const dispatch = useDispatch();
   const userCartState = useSelector(state=>state?.auth?.cartProducts)
@@ -43,7 +43,8 @@ dispatch(getUserCart())
                   <div  key ={index} className="cart-data py-3 mb-2  d-flex justify-content-between align-items-center">
                   <div className="cart-col-1  gap-15 d-flex align-items-center">
                     <div className="w-25">
-                      <img src={watch} alt="watch" className="img-fluid" />
+                      {/* <img src={watch} alt="watch" className="img-fluid" /> */}
+                      <GiWatch />
                     </div>
                     <div className="w-75">
                       <p>{item?.productId.title}</p>

@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from 'react-router-dom'
 import { BsLinkedin ,BsGithub ,BsYoutube ,BsInstagram } from "react-icons/bs";
 
-
+import { BsSendArrowUp } from "react-icons/bs";
 function Footer() {
   return (
 <> 
@@ -11,7 +11,7 @@ function Footer() {
     <div className="row align-items-center">
       <div className="col-5">
         <div className="footer-top-data d-flex gap-30 align-items-center">
-          <img  src="" alt="newsletter"/>
+        <BsSendArrowUp />
           <h2 className="mb-0 text-white">Sign up for newsletter</h2>
         </div>
       </div>

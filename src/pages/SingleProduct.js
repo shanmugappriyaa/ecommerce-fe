@@ -17,10 +17,11 @@ function SingleProduct() {
   const getProductId = location.pathname.split("/")[2];
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
-  const productState = useSelector((state) => state.product.Singleproduct);
+  const productState = useSelector((state) => state?.product?.singleproduct?.product);
   useEffect(() => {
     dispatch(getAProduct(getProductId));
-  });
+  },[]);
+  
   const uploadCart = () => {
     dispatch(
       addProdToCart({
