@@ -13,7 +13,7 @@ function Wishlist() {
   }, []);
 
   const getWishlistFromDb = () => {
-    dispatch(getUserProductWishlist);
+    dispatch(getUserProductWishlist());
   };
 
   const wishlistState = useSelector((state) => state?.auth?.wishlist?.wishlist);
