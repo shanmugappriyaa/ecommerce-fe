@@ -6,7 +6,7 @@ import ReactImageZoom from "react-image-zoom";
 import ReactStars from "react-rating-stars-component";
 import { AiOutlineHeart } from "react-icons/ai";
 import Container from "../components/Container";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAProduct } from "../features/products/productSlice";
 
@@ -15,20 +15,35 @@ import { addProdToCart } from "../features/user/userSlice";
 function SingleProduct() {
   const location = useLocation();
   const getProductId = location.pathname.split("/")[2];
+  const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
+  const [alreadyAdded, setAlreadyAdded] = useState(false);
   const dispatch = useDispatch();
-  const productState = useSelector((state) => state?.product?.singleproduct?.product);
+  const productState = useSelector(
+    (state) => state?.product?.singleproduct?.product
+  );
+  const cartState = useSelector((state) => state?.auth?.cartProduct);
   useEffect(() => {
     dispatch(getAProduct(getProductId));
-  },[]);
-  
+  }, []);
+  useEffect(() => {
+    if (cartState?.length > 0) {
+      for (let i = 0; i < cartState.length; i++) {
+        if (getProductId === cartState[i]?.productId?._id) {
+          setAlreadyAdded(true);
+        }
+      }
+    }
+  }, []);
+
   const uploadCart = () => {
     dispatch(
       addProdToCart({
         productId: productState?._id,
         quantity,
         price: productState?.price,
-      })
+      }),
+      navigate("/cart")
     );
   };
   const props = {
@@ -44,7 +59,7 @@ function SingleProduct() {
     <>
       <Meta title={"Product Name"} />
       <BreadCrumb title="Product Name" />
-      <Container className="main-product-wrapper home-wrapper-2 py-5">
+      <Container className="main-product-wrapper home-wrapper-2 p-5">
         <div className="row">
           <div className="col-6">
             <div className="main-product-image">
@@ -73,51 +88,64 @@ function SingleProduct() {
               </div>
               <div className="border-bottom py-3">
                 <div className="d-flex gap-10 align-items-center my-2">
-                  <h3 className="product-heading">Type</h3>
-                  <p className="product-data">Watch</p>
+                  <label className="product-heading">Type</label>
+                  <label className="product-data">Watch</label>
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
-                  <h3 className="product-heading">Brand</h3>
-                  <p className="product-data">{productState?.brand}</p>
+                  <label className="product-heading">Brand</label>
+                  <label className="product-data">{productState?.brand}</label>
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
-                  <h3 className="product-heading">Categories</h3>
-                  <p className="product-data">{productState?.category}</p>
+                  <label className="product-heading">Categories</label>
+                  <label className="product-data">
+                    {productState?.category}
+                  </label>
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
-                  <h3 className="product-heading">Tags</h3>
-                  <p className="product-data">{productState?.tags}</p>
+                  <label className="product-heading">Tags</label>
+                  <label className="product-data">{productState?.tags}</label>
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
-                  <h3 className="product-heading">Avaiablity</h3>
-                  <p className="product-data">In Stock</p>
+                  <label className="product-heading">Avaiablity</label>
+                  <label className="product-data">In Stock</label>
                 </div>
                 <div className="d-flex gap-15 align-items-center flex-row mb-3 mt-2">
-                  <h3 className="product-heading">Quantity:</h3>
-                  <div className="">
-                    <input
-                      type="number"
-                      id=""
-                      name=""
-                      min={1}
-                      max={10}
-                      style={{ width: "70px" }}
-                      className="form-control"
-                      onChange={(e) => setQuantity(e.target.value)}
-                      value={quantity}
-                    />
-                  </div>
-                  <div className="d-flex align-items-center gap-30 ms-5">
+                  {alreadyAdded === false && (
+                    <>
+                      <label className="product-heading">Quantity:</label>
+                      <div className="">
+                        <input
+                          type="number"
+                          id=""
+                          name=""
+                          min={1}
+                          max={10}
+                          style={{ width: "70px" }}
+                          className="form-control"
+                          onChange={(e) => setQuantity(e.target.value)}
+                          value={quantity}
+                        />
+                      </div>
+                    </>
+                  )}
+
+                  <div
+                    className={
+                      alreadyAdded
+                        ? "ms-0"
+                        : "ms-5" + "d-flex align-items-center gap-30 ms-5"
+                    }
+                  >
                     <button
-                      className="button border-0"
+                      className="button  prime-btn border-0"
                       type="button"
                       onClick={() => {
-                        uploadCart(productState?._id);
+                        alreadyAdded ? navigate("/cart") : uploadCart();
                       }}
                     >
-                      Add to Cart
+                      {alreadyAdded ? "Go To Cart" : "Add to Cart"}
                     </button>
-                    <button className="button signup">Buy it NOW</button>
+                    {/* <button className="button signup">Buy it NOW</button> */}
                   </div>
                   <div className="d-flex align-items-center gap-15 ">
                     <div>
@@ -133,7 +161,7 @@ function SingleProduct() {
         </div>
       </Container>
 
-      <Container class1="description-wrapper home-wrapper-2 py-5">
+      <Container class1="description-wrapper home-wrapper-2 px-5">
         <div className="row">
           <div className="col-12">
             <h4>Description</h4>
@@ -144,7 +172,7 @@ function SingleProduct() {
         </div>
       </Container>
 
-      <Container class1="review-wrapper home-wrapper-2 ">
+      <Container class1="review-wrapper home-wrapper-2 px-5 ">
         <div className="row">
           <div className="col-12">
             <h3>Reviews</h3>
@@ -170,7 +198,7 @@ function SingleProduct() {
           </div>
         </div>
       </Container>
-      <Container class1="popular-wrapper home-wrapper-2 py-5">
+      <Container class1="popular-wrapper home-wrapper-2 px-5">
         <div className="row">
           <div className="col-12">
             <h3 className="section-heading">Our Popular Products</h3>

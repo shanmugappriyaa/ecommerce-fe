@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 function Checkout() {
   const dispatch = useDispatch();
-  const cartState = useSelector ((state) => state?.auth?.cartProducts);
+  const cartState = useSelector((state) => state?.auth?.cartProduct);
   const [totalAmount, setTotalAmount] = useState(null);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ function Checkout() {
       phone: "",
     },
     onSubmit: (values) => {
-      dispatch((values));
+      dispatch(values);
       // setTimeout(() => {
       //   if (authState.isSuccess) {
       //     navigate("/");
@@ -51,7 +51,7 @@ function Checkout() {
 
   return (
     <>
-      <Container class1="checkout-wrapper home-wrapper-2 py-5">
+      <Container class1="checkout-wrapper home-wrapper-2 p-5">
         <div className="row">
           <div className="col-7">
             <div className="checkout-left-data">
@@ -216,46 +216,58 @@ function Checkout() {
               </div>
             </div>
           </div>
-        </div>
-        <div className="col-5">
-          <div className="border-bottom py-4">
-            {cartState &&
-              cartState?.map((item, index) => {
-                return (
-                  <div className="d-flex  gap-10 mb-2 align-items-center">
-                    <div className="w-75 d-flex gap-10">
-                      <div className="w-25 position-relative">
-                        <span
-                          style={{ top: "-10px", right: "2px" }}
-                          className="badge bg-secondary text-white rounded-circle p-2 position-absolute"
-                        >
-                          {item?.quantity}
-                        </span>
-                        <img width={100} height={100} src={item?.productId?.images[0].url} 
-                        alt="" />
-                      </div>
-                      <h5 className="total-price">{item?.productId?.title}</h5>
-                      <div></div>
-                      <div className="flex-grow-1">
-                        <h5 className="total">${item?.price *item?.quantity}</h5>
+          <div className="col-5">
+            <div className="border-bottom py-4">
+              {cartState &&
+                cartState?.map((item, index) => {
+                  return (
+                    <div className="d-flex  gap-10 mb-2 align-items-center">
+                      <div className="w-75 d-flex gap-10">
+                        <div className="w-25 position-relative">
+                          <span
+                            style={{ top: "-10px", right: "2px" }}
+                            className="badge bg-secondary text-white rounded-circle p-2 position-absolute"
+                          >
+                            {item?.quantity}
+                          </span>
+                          <img
+                            width={100}
+                            height={100}
+                            src={item?.productId?.images[0].url}
+                            alt=""
+                          />
+                        </div>
+                        <h5 className="total-price">
+                          {item?.productId?.title}
+                        </h5>
+                        <div></div>
+                        <div className="flex-grow-1">
+                          <h5 className="total">
+                            ${item?.price * item?.quantity}
+                          </h5>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-            <div className="border-bottom py-4">
-              <div className="d-flex justify-content-between align-items-center">
-                <p className="total">Subtotal</p>
-                <p className="total-price">$ {totalAmount ? totalAmount  :"0"}</p>
+                  );
+                })}
+              <div className="border-bottom py-4">
+                <div className="d-flex justify-content-between align-items-center">
+                  <p className="total">Subtotal</p>
+                  <p className="total-price">
+                    $ {totalAmount ? totalAmount : "0"}
+                  </p>
+                </div>
+                <div className="d-flex justify-content-between align-items-center">
+                  <p className="mb-0 total">Shipping</p>
+                  <p className="mb-0 total-price">$ 10</p>
+                </div>
               </div>
-              <div className="d-flex justify-content-between align-items-center">
-                <p className="mb-0 total">Shipping</p>
-                <p className="mb-0 total-price">$ 10</p>
+              <div className="d-flex justify-content-between align-items-center border-bottom py-4">
+                <h4 className="total">Total</h4>
+                <h5 className="total-price">
+                  $ {totalAmount ? totalAmount + 10 : "0"}
+                </h5>
               </div>
-            </div>
-            <div className="d-flex justify-content-between align-items-center border-bottom py-4">
-              <h4 className="total">Total</h4>
-              <h5 className="total-price">$ {totalAmount ? totalAmount +10 :"0"}</h5>
             </div>
           </div>
         </div>

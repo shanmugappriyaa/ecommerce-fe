@@ -23,16 +23,7 @@ function ProductCard(props) {
               location.pathname == "/product" ? `gr-${grid}` : "col-3"
             }`}
           >
-            <Link
-              to={`${
-                location.pathname == "/"
-                  ? `/product/${item._id}`
-                  : location.pathname == `/product/${item._id}`
-                  ? `/product/${item._id}`
-                  : `${item._id}`
-              }`}
-              className="product-card position-relative"
-            >
+            <div className="product-card card position-relative mb-3">
               <div className="wishlist-icon position-absolute">
                 <button
                   className="border-0 bg-transparent"
@@ -41,7 +32,7 @@ function ProductCard(props) {
                   }}
                 >
                   {/* <img src={wish} alt="wishlist" /> */}
-                 <AiOutlineHeart /> 
+                  <AiOutlineHeart />
                 </button>
               </div>
               <div className="product-image">
@@ -51,7 +42,16 @@ function ProductCard(props) {
                   alt="product-img"
                 />
               </div>
-              <div className="product-details">
+              <Link
+                to={`${
+                  location.pathname == "/"
+                    ? `/product/${item._id}`
+                    : location.pathname == `/product/${item._id}`
+                    ? `/product/${item._id}`
+                    : `${item._id}`
+                }`}
+                className="product-details"
+              >
                 <h6 className="brand">{item?.brand}</h6>
                 <h5 className="product-title">{item?.title}</h5>
                 <ReactStars
@@ -69,8 +69,8 @@ function ProductCard(props) {
                   {item?.description}
                 </p>
                 <p className="Price">$ {item?.price}</p>
-              </div>
-            </Link>
+              </Link>
+            </div>
           </div>
         );
       })}

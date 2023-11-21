@@ -133,7 +133,7 @@ function Signup() {
                 </div>
                 <div>
                   <div className="mt-3 d-flex justify-content-center gap-15 align-items-center">
-                    <button className="button border-0">Create</button>
+                    <button className="button prime-btn border-0">Create</button>
                   </div>
                 </div>
               </form>

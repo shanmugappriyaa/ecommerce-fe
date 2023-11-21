@@ -6,21 +6,29 @@ import BreadCrumb from "../components/BreadCrumb";
 import { AiFillDelete } from "react-icons/ai";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserCart } from "../features/user/userSlice";
+import { getUserCart, deleteCartPoduct } from "../features/user/userSlice";
 import { GiWatch } from "react-icons/gi";
 function Cart() {
   const dispatch = useDispatch();
-  const userCartState = useSelector(state=>state?.auth?.cartProducts)
-  useEffect(()=>{
-dispatch(getUserCart())
-  },[])
+  const userCartState = useSelector((state) => state?.auth?.cartProduct);
+  useEffect(() => {
+    dispatch(getUserCart());
+  }, []);
+  const deleteACartProduct = (id) => {
+    dispatch(deleteCartPoduct(id));
+    setTimeout(() => {
+      dispatch(getUserCart());
+    }, 200);
+  };
   const [totalAmount, setTotalAmount] = useState(null);
   useEffect(() => {
     let sum = 0;
     for (let index = 0; index < userCartState?.length; index++) {
       sum =
         sum +
-        Number(userCartState[index].quantity * userCartState[index].price);
+        Number(
+          userCartState?.[index]?.quantity * userCartState?.[index]?.price
+        );
       setTotalAmount(sum);
     }
   }, [userCartState]);
@@ -28,7 +36,7 @@ dispatch(getUserCart())
     <>
       <Meta title={"Cart"} />
       <BreadCrumb title="Cart" />
-      <Container class1="cart-wrapper home-wrapper-2 py-5">
+      <Container class1="cart-wrapper home-wrapper-2 p-5">
         <div className="row align-items-center">
           <div className="col-12">
             <div className="cart-header py-3 d-flex justify-content-between align-items-center">
@@ -37,47 +45,56 @@ dispatch(getUserCart())
               <h4 className="cart-col-3">Quantity</h4>
               <h4 className="cart-col-4">Total</h4>
             </div>
-            {
-              userCartState && userCartState?.map((item,index)=>{
-                return(
-                  <div  key ={index} className="cart-data py-3 mb-2  d-flex justify-content-between align-items-center">
-                  <div className="cart-col-1  gap-15 d-flex align-items-center">
-                    <div className="w-25">
-                      {/* <img src={watch} alt="watch" className="img-fluid" /> */}
-                      <GiWatch />
+            {userCartState &&
+              userCartState?.map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="cart-data py-3 mb-2  d-flex justify-content-between align-items-center"
+                  >
+                    <div className="cart-col-1  gap-15 d-flex align-items-center">
+                      <div className="w-25">
+                        {/* <img src={watch} alt="watch" className="img-fluid" /> */}
+                        <GiWatch />
+                      </div>
+                      <div className="w-75">
+                        <p>{item?.productId.title}</p>
+                      </div>
                     </div>
-                    <div className="w-75">
-                      <p>{item?.productId.title}</p>
+                    <div className="cart-col-2">
+                      <h5 className="Price">$ {item?.productId.price}</h5>
+                    </div>
+                    <div className="cart-col-3 d-flex align-items-center gap-15">
+                      <div>
+                        <input
+                          className="form-control"
+                          type="number"
+                          name=""
+                          id=""
+                          min={1}
+                          max={10}
+                          value={item?.quantity}
+                        />
+                      </div>
+                      <div>
+                        {" "}
+                        <AiFillDelete
+                          onClick={() => {
+                            deleteACartProduct(item?._id);
+                          }}
+                          className="text-danger"
+                        />
+                      </div>
+                    </div>
+                    <div className="cart-col-4">
+                      <h5 className="Price">
+                        $ {item?.quantity * item?.price}
+                      </h5>
                     </div>
                   </div>
-                  <div className="cart-col-2">
-                    <h5 className="Price">$ {item?.productId.price}</h5>
-                  </div>
-                  <div className="cart-col-3 d-flex align-items-center gap-15">
-                    <div>
-                      <input
-                        className="form-control"
-                        type="number"
-                        name=""
-                        id=""
-                        min={1}
-                        max={10}
-                        value={item?.quantity}
-                      />
-                    </div>
-                    <div>
-                      {" "}
-                      <AiFillDelete className="text-danger" />
-                    </div>
-                  </div>
-                  <div className="cart-col-4">
-                    <h5 className="Price">$ {item?.quantity * item?.price }</h5>
-                  </div>
-                </div>
-                )
-              })
-            }
-           
+                );
+              })}
+
             {/* <div className="cart-data py-3 mb-2  d-flex justify-content-between align-items-center">
               <div className="cart-col-1  gap-15 d-flex align-items-center">
                 <div className="w-25">
@@ -112,14 +129,14 @@ dispatch(getUserCart())
             </div> */}
             <div className="col-12 py-2 mt-4">
               <div className="d-flex justify-content-between align-items-baseline">
-                <Link to="/product" className="button">
+                <Link to="/product" className="button prime-btn">
                   Continue to Shopping
                 </Link>
                 {(totalAmount !== null || totalAmount !== 0) && (
                   <div className="d-flex flex-column align-items-end">
                     <h4> SubTotal :$ {totalAmount}</h4>
                     <p>Taxes and Shipping calculated at checkout</p>
-                    <Link to="/checkout" className="button">
+                    <Link to="/checkout" className="button sec-btn">
                       Checkout
                     </Link>
                   </div>

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserProductWishlist } from "../features/user/userSlice";
 import { addToWishlist } from "../features/products/productSlice";
 import { commonFile } from "../utils/Data";
+import { RxCross2 } from "react-icons/rx";
 function Wishlist() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -16,19 +17,21 @@ function Wishlist() {
     dispatch(getUserProductWishlist());
   };
 
-  const wishlistState = useSelector((state) => state?.auth?.wishlist?.wishlist);
+  const wishlistState = useSelector(
+    (state) => state?.auth?.wishlist?.findUser?.wishlist
+  );
 
   const removeFromWishlist = (id) => {
     dispatch(addToWishlist(id));
     setTimeout(() => {
       dispatch(getUserProductWishlist());
-    }, 300);
+    }, 2000);
   };
   return (
     <>
       <Meta title={"Wishlist"} />
       <BreadCrumb title="Wishlist" />
-      <Container class1="wishlist-wrapper home-wrapper-2 py-5">
+      <Container class1="wishlist-wrapper home-wrapper-2 p-5">
         <div className="row">
           {wishlistState && wishlistState.length === 0 && (
             <div className="text-center fs-3">No Data </div>
@@ -37,15 +40,20 @@ function Wishlist() {
             wishlistState?.map((item, index) => {
               return (
                 <div className="col-3" key={index}>
-                  <div className="wishlist-card">
-                    <img
-                      onClick={() => {
-                        removeFromWishlist(item?._id);
-                      }}
+                  <div className="wishlist-card card">
+                    <div className="d-flex justify-content-end p-2">
+                      <RxCross2
+                        onClick={() => {
+                          removeFromWishlist(item?._id);
+                        }}
+                      />
+                    </div>
+
+                    {/* <img
                       src=""
                       alt="cross"
                       className="position-absoulte cross img-fluid"
-                    />
+                    /> */}
                     <div className="wishlist-card-image bg-white">
                       <img
                         src={
@@ -64,8 +72,6 @@ function Wishlist() {
                 </div>
               );
             })}
-
-    
         </div>
       </Container>
     </>

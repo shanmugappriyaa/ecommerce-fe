@@ -73,6 +73,16 @@ export const resetPassword = createAsyncThunk(
     }
   }
 );
+export const deleteCartPoduct = createAsyncThunk(
+  "user/cart/product/delete",
+  async (id, thunkAPI) => {
+    try {
+      return await authService.removeProductFromCart(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 const getCustomerFromLocalStorage = localStorage.getItem("customer")
   ? JSON.parse(localStorage.getItem("customer"))
@@ -157,7 +167,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.cartProduct = action.payload;
+        state.cartProduct = [action.payload?.newCart];
         if (state.isSuccess === true) {
           toast.info("Product Added to Cart Successfully");
         }
@@ -175,7 +185,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.cartProducts = action.payload;
+        state.cartProduct = action?.payload?.cart;
       })
       .addCase(getUserCart.rejected, (state, action) => {
         state.isLoading = false;
@@ -219,7 +229,28 @@ export const authSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
         if (state.isSuccess === false) {
-          toast.info("Something  Went Wrong");
+          toast.error("Something  Went Wrong");
+        }
+      })
+      .addCase(deleteCartPoduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteCartPoduct.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.deletedCartProduct = action.payload;
+        if (state.isSuccess === true) {
+          toast.info("Product deleted Successfully");
+        }
+      })
+      .addCase(deleteCartPoduct.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        if (state.isSuccess === false) {
+          toast.error("Something  Went Wrong");
         }
       });
   },

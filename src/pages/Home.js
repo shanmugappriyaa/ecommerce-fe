@@ -8,9 +8,8 @@ import ProductCard from "../components/ProductCard";
 import Container from "../components/Container";
 import { services } from "../utils/Data";
 
-import { AiOutlineCamera,AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineCamera, AiOutlineHeart } from "react-icons/ai";
 import { GiWatch } from "react-icons/gi";
-
 
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../features/products/productSlice";
@@ -32,16 +31,16 @@ function Home() {
 
   return (
     <>
-      <Container class1="home-wrapper-2 py-5">
+      <Container class1="home-wrapper-2 pt-5 px-4">
         <div className="row">
           <div className="col-12">
             <div className="services d-flex align-items-center justify-content-between">
               {services?.map((i, j) => {
                 return (
-                  <div className="d-flex align-items-center gap-15" key={j}>
+                  <div className="d-flex align-items-center gap-20" key={j}>
                     {/* <img src={i.image} alt="services" /> */}
                     {i.image}
-                    <div>
+                    <div className="ps-2">
                       <h6>{i.title}</h6>
                       <p className="mb-0">{i.tagline}</p>
                     </div>
@@ -62,62 +61,62 @@ function Home() {
                   <h6>Camera</h6>
                   <p>10items</p>
                 </div>
-                <GiWatch/>
+                <GiWatch className="header-icon" />
               </div>
               <div className="d-flex  align-items-center">
                 <div>
                   <h6>Smart Tv</h6>
                   <p>10items</p>
                 </div>
-      <AiOutlineCamera />
+                <AiOutlineCamera className="header-icon" />
               </div>
               <div className="d-flex  align-items-center">
                 <div>
                   <h6>Smart Watches</h6>
                   <p>10items</p>
                 </div>
-                <GiWatch/>
+                <GiWatch className="header-icon" />
               </div>
               <div className="d-flex  align-items-center">
                 <div>
                   <h6>Music & Gaming</h6>
                   <p>10items</p>
                 </div>
-                <AiOutlineCamera />
+                <AiOutlineCamera className="header-icon" />
               </div>
               <div className="d-flex  align-items-center">
                 <div>
                   <h6>Camera</h6>
                   <p>10items</p>
                 </div>
-                <GiWatch/>
+                <GiWatch className="header-icon" />
               </div>
               <div className="d-flex  align-items-center">
                 <div>
                   <h6>Smart Tv</h6>
                   <p>10items</p>
                 </div>
-                <AiOutlineCamera />
+                <AiOutlineCamera className="header-icon" />
               </div>
               <div className="d-flex  align-items-center">
                 <div>
                   <h6>Smart Tv</h6>
                   <p>10items</p>
                 </div>
-                <GiWatch/>
+                <GiWatch className="header-icon" />
               </div>
               <div className="d-flex  align-items-center">
                 <div>
                   <h6>Smart Tv</h6>
                   <p>10items</p>
                 </div>
-                <AiOutlineCamera />
+                <AiOutlineCamera className="header-icon" />
               </div>
             </div>
           </div>
         </div>
       </Container>
-      <Container class1="featured-wrapper  py-5 home-wrapper-2">
+      <Container class1="featured-wrapper  px-4 home-wrapper-2">
         <div className="row">
           <div className="col-12">
             <h3 className="section-heading">Featured Collection</h3>
@@ -126,8 +125,8 @@ function Home() {
             product?.map((item, index) => {
               if (item) {
                 return (
-                  <div key={index} className="col-3">
-                    <Link className="product-card position-relative">
+                  <div key={index} className="col-3 mb-5">
+                    <div className="product-card card position-relative">
                       <div className="wishlist-icon position-absolute">
                         <button
                           className="border-0 bg-transparent"
@@ -146,7 +145,10 @@ function Home() {
                           alt="product-img"
                         />
                       </div>
-                      <div className="product-details">
+                      <Link
+                        to={`/product/${item._id}`}
+                        className="product-details"
+                      >
                         <h6 className="brand">{item?.brand}</h6>
                         <h5 className="product-title">{item?.title}</h5>
                         <ReactStars
@@ -157,8 +159,8 @@ function Home() {
                           activeColor="#ffd700"
                         />
                         <p className="Price">$ {item?.price}</p>
-                      </div>
-                    </Link>
+                      </Link>
+                    </div>
                   </div>
                 );
               }

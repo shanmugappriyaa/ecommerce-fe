@@ -10,24 +10,24 @@ import { useDispatch, useSelector } from "react-redux";
 function Header() {
   const [total, setTotal] = useState(null);
   const dispatch = useDispatch();
-  const authState = useSelector(state => state.auth)
-  const cartState = useSelector((state) => state?.auth?.cartProducts);
+  const authState = useSelector((state) => state.auth);
+  const cartState = useSelector((state) => state?.auth?.cartProduct);
   useEffect(() => {
     let sum = 0;
     for (let index = 0; index < cartState?.length; index++) {
       sum =
         sum +
         Number(cartState[index].quantity) * Number(cartState[index].price);
-      setTotal = sum;
+      setTotal(sum);
     }
   }, [cartState]);
-  const handleLogout = ()=>{
+  const handleLogout = () => {
     localStorage.clear();
-    window.location.reload()
-  }
+    window.location.reload();
+  };
   return (
     <>
-      <header className="header-top-strip py-3">
+      <header className="header-top-strip py-3 px-4">
         {/* <div className="container-xxl"></div> */}
         <div className="row">
           <div className="col-6">
@@ -43,7 +43,7 @@ function Header() {
           </div>
         </div>
       </header>
-      <header className="header-upper py-3">
+      <header className="header-upper py-3 px-2">
         <div className="container-xxl">
           <div className="row align-items-center">
             <div className="col-2">
@@ -73,7 +73,7 @@ function Header() {
                     className="d-flex align-items-center gap-10 text-white"
                   >
                     {/* <img src={whishlistImage} alt="wishlist" /> */}
-                    <AiOutlineHeart />
+                    <AiOutlineHeart className="header-icon" />
                     <p className="mb-0">
                       Favourites <br /> Wishlist
                     </p>
@@ -81,20 +81,20 @@ function Header() {
                 </div>
                 <div>
                   <Link
-                    to={authState?.user===null ? "/login" :""}
+                    to={authState?.user === null ? "/login" : ""}
                     className="d-flex align-items-center gap-10 text-white"
                   >
                     {/* <img src={userImage} alt="user" /> */}
-                    <BiUserCircle />
-                    {
-                      authState?.user===null ? <p className="mb-0">
-                      Log in <br /> My Account</p>
-                      :  <p className="mb-0">
-                      Welcome <br /> {authState?.user?.firstname}
-  
-                    </p>
-                    }
-                   
+                    <BiUserCircle className="header-icon" />
+                    {authState?.user === null ? (
+                      <p className="mb-0">
+                        Log in <br /> My Account
+                      </p>
+                    ) : (
+                      <p className="mb-0">
+                        Welcome <br /> {authState?.user?.firstname}
+                      </p>
+                    )}
                   </Link>
                 </div>
                 <div>
@@ -102,7 +102,7 @@ function Header() {
                     to="/cart"
                     className="d-flex align-items-center gap-10 text-white"
                   >
-                    <BsCart4 />
+                    <BsCart4 className="header-icon" />
                     <div className="d-flex flex-column gap-10">
                       <span className="badge bg-white text-dark">
                         {cartState?.length ? cartState?.length : 0}
@@ -116,7 +116,7 @@ function Header() {
           </div>
         </div>
       </header>
-      <header className="header-bottom py-3">
+      <header className="header-bottom py-3 px-4">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
@@ -131,7 +131,7 @@ function Header() {
                       aria-expanded="false"
                     >
                       {/* <img src={menuImage} alt="menu" /> */}
-                      <RxDropdownMenu />
+                      <RxDropdownMenu className="cat-drop-down-icon" />
 
                       <span className="me-5 d-inline-block">
                         Shop Categories
@@ -164,7 +164,13 @@ function Header() {
                   <NavLink to="/">Home</NavLink>
                   <NavLink to="/product">Our Store</NavLink>
                   <NavLink to="/contact">Contact</NavLink>
-                  <button onClick={handleLogout} className="border border-0 bg-transparent text-white"> LOGOUT</button>
+                  <button
+                    onClick={handleLogout}
+                    className="border border-0 bg-transparent text-white"
+                  >
+                    {" "}
+                    LOGOUT
+                  </button>
                 </div>
               </div>
             </div>

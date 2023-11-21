@@ -83,8 +83,8 @@ function Login() {
                 <div>
                   <Link to="/forgot-password">Forgot Password?</Link>
                   <div className="mt-3 d-flex justify-content-center gap-15 align-items-center">
-                    <button className="button border-0">Login</button>
-                    <Link to="/sign-up" className="button signup">
+                    <button className="button border-0 prime-btn ">Login</button>
+                    <Link to="/sign-up" className="button sec-btn signup ps-4">
                       SignUp
                     </Link>
                   </div>

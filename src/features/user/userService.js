@@ -35,6 +35,12 @@ const getCart = async () => {
     return response.data;
   }
 };
+const removeProductFromCart = async (cartItemId) => {
+  const response = await axios.delete(`${base_url}user/delete-product-cart/${cartItemId}`,config);
+  if (response.data) {
+    return response.data;
+  }
+};
 const forgotPassToken = async (data) => {
   const response = await axios.post(
     `${base_url}user/forgot-passowrd-token`,
@@ -62,5 +68,5 @@ export const authService = {
   addToCart,
   getCart,
   forgotPassToken,
-  resetPass,
+  resetPass,removeProductFromCart
 };

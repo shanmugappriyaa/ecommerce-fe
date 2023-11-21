@@ -19,7 +19,6 @@ const getSingleProduct = async (id) => {
   }
 };
 const addToWishlist = async (proId) => {
-  console.log("config----------> ", config);
   const response = await axios.post(
     `${base_url}product/wishlist`,
     { proId },
