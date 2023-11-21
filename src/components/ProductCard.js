@@ -3,6 +3,7 @@ import ReactStars from "react-rating-stars-component";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToWishlist } from "../features/products/productSlice";
+import { AiOutlineHeart } from "react-icons/ai";
 
 function ProductCard(props) {
   let location = useLocation();
@@ -39,7 +40,8 @@ function ProductCard(props) {
                     addToWish(item?._id);
                   }}
                 >
-                  <img src={wish} alt="wishlist" />
+                  {/* <img src={wish} alt="wishlist" /> */}
+                 <AiOutlineHeart /> 
                 </button>
               </div>
               <div className="product-image">

@@ -8,7 +8,7 @@ import ProductCard from "../components/ProductCard";
 import Container from "../components/Container";
 import { services } from "../utils/Data";
 
-import { AiOutlineCamera } from "react-icons/ai";
+import { AiOutlineCamera,AiOutlineHeart } from "react-icons/ai";
 import { GiWatch } from "react-icons/gi";
 
 
@@ -135,7 +135,8 @@ function Home() {
                             addToWish(item?._id);
                           }}
                         >
-                          <img src={wish} alt="wishlist" />
+                          {/* <img src={wish} alt="wishlist" /> */}
+                          <AiOutlineHeart />
                         </button>
                       </div>
                       <div className="product-image">
