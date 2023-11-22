@@ -54,6 +54,16 @@ export const getUserCart = createAsyncThunk(
     }
   }
 );
+export const deleteUserCart = createAsyncThunk(
+  "user/cart/delete",
+  async (thunkAPI) => {
+    try {
+      return await authService.emptyCart();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 export const forgotPasswordToken = createAsyncThunk(
   "user/forgot/token",
   async (data, thunkAPI) => {
@@ -277,6 +287,24 @@ export const authSlice = createSlice({
         }
       })
       .addCase(updateProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        if (state.isSuccess === false) {
+          toast.error("Something  Went Wrong");
+        }
+      }).addCase(deleteUserCart.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteUserCart.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.deleteCart = action.payload;
+  
+      })
+      .addCase(deleteUserCart.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;

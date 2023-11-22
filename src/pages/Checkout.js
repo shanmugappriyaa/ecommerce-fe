@@ -5,14 +5,17 @@ import { BiArrowBack } from "react-icons/bi";
 import Container from "../components/Container";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+
 import { useDispatch, useSelector } from "react-redux";
+import { deleteUserCart } from "../features/user/userSlice";
 
 function Checkout() {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const cartState = useSelector((state) => state?.auth?.cartProduct);
   const userState = useSelector((state) => state.auth.user);
   const [totalAmount, setTotalAmount] = useState(null);
+  const [shippingInfo, setShippingInfo] = useState(null);
 
   useEffect(() => {
     let sum = 0;
@@ -26,7 +29,7 @@ function Checkout() {
     lastname: Yup.string().required("LastName is Required"),
     address: Yup.string().required(" Addressis Required"),
     email: Yup.string(),
-    
+
     pincode: Yup.number().required("pincode is required"),
     phone: Yup.number().required("phone No is required"),
   });
@@ -40,12 +43,9 @@ function Checkout() {
       phone: "",
     },
     onSubmit: (values) => {
-      dispatch(values);
-      // setTimeout(() => {
-      //   if (authState.isSuccess) {
-      //     navigate("/");
-      //   }
-      // }, 300);
+      dispatch(deleteUserCart());
+      // setShippingInfo(values);
+      navigate("/my-profile");
     },
     validationSchema: shippingSchema,
   });
@@ -53,43 +53,45 @@ function Checkout() {
   return (
     <>
       <Container class1="checkout-wrapper home-wrapper-2 p-5">
-        <div className="row">
-          <div className="col-7">
-            <div className="checkout-left-data">
-              <h3 className="website-name"> Shanmart</h3>
-              <nav
-                style={{ "--bs-breadcrumb-divider": ">" }}
-                aria-label="breadcrumb"
-              >
-                <ol className="breadcrumb">
-                  <li className="breadcrumb-item total-price">
-                    <Link className="text-dark total-price" to="/cart">
-                      Cart
-                    </Link>
-                  </li>
-                  &nbsp;/
-                  <li className="breadcrumb-item total-price">
-                    <a href="#">Information</a>
-                  </li>
-                  &nbsp;/
-                  <li
-                    className="breadcrumb-item total-price active"
-                    aria-current="page"
-                  >
-                    Shipping
-                  </li>
-                </ol>
-              </nav>
-              <h4 className="title">Contact Information</h4>
-              <p className="user-details">{userState?.firstname}({userState?.email})</p>
-              <div className="row">
-                <div className="col-md-8 mb-4">
-                  <div className="card mb-4">
-                    <div className="card-header py-3">
-                      <h4 className="mb-3">Shipping Address</h4>
-                    </div>
-                    <div className="card-body">
-                      <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={formik.handleSubmit}>
+          <div className="row">
+            <div className="col-7">
+              <div className="checkout-left-data">
+                <h3 className="website-name"> Shanmart</h3>
+                <nav
+                  style={{ "--bs-breadcrumb-divider": ">" }}
+                  aria-label="breadcrumb"
+                >
+                  <ol className="breadcrumb">
+                    <li className="breadcrumb-item total-price">
+                      <Link className="text-dark total-price" to="/cart">
+                        Cart
+                      </Link>
+                    </li>
+                    &nbsp;/
+                    <li className="breadcrumb-item total-price">
+                      <a href="#">Information</a>
+                    </li>
+                    &nbsp;/
+                    <li
+                      className="breadcrumb-item total-price active"
+                      aria-current="page"
+                    >
+                      Shipping
+                    </li>
+                  </ol>
+                </nav>
+                <h4 className="title">Contact Information</h4>
+                <p className="user-details">
+                  {userState?.firstname}({userState?.email})
+                </p>
+                <div className="row">
+                  <div className="col-md-8 mb-4">
+                    <div className="card mb-4">
+                      <div className="card-header py-3">
+                        <h4 className="mb-3">Shipping Address</h4>
+                      </div>
+                      <div className="card-body">
                         {/* <!-- 2 column grid layout with text inputs for the first and last names --> */}
                         <div className="row mb-4">
                           <div className="col">
@@ -175,7 +177,6 @@ function Checkout() {
                             id="form7Example5"
                             className="form-control"
                             value={userState?.email}
-                           
                           />
                           <div className="error">
                             {formik.touched.email && formik.errors.email}
@@ -209,74 +210,80 @@ function Checkout() {
                             Continue to shipping
                           </Link>
                         </div>
-                      </form>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="col-5">
-            <div className="border-bottom py-4">
-              {cartState &&
-                cartState?.map((item, index) => {
-                  return (
-                    <div className="d-flex  gap-10 mb-2 align-items-center">
-                      <div className="w-75 d-flex gap-10">
-                        <div className="w-25 position-relative">
-                          <span
-                            style={{ top: "-10px", right: "2px" }}
-                            className="badge bg-secondary text-white rounded-circle p-2 position-absolute"
-                          >
-                            {item?.quantity}
-                          </span>
-                          <img
-                            width={100}
-                            height={100}
-                            src={item?.productId?.images[0].url}
-                            alt=""
-                          />
-                        </div>
-                        <h5 className="total-price">
-                          {item?.productId?.title}
-                        </h5>
-                        <div></div>
-                        <div className="flex-grow-1">
-                          <h5 className="total">
-                            ${item?.price * item?.quantity}
+            <div className="col-5">
+              <div className="border-bottom py-4">
+                {cartState &&
+                  cartState?.map((item, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="d-flex  gap-10 mb-2 align-items-center"
+                      >
+                        <div className="w-75 d-flex gap-10">
+                          <div className="w-25 position-relative">
+                            <span
+                              style={{ top: "-10px", right: "2px" }}
+                              className="badge bg-secondary text-white rounded-circle p-2 position-absolute"
+                            >
+                              {item?.quantity}
+                            </span>
+                            <img
+                              width={100}
+                              height={100}
+                              src={item?.productId?.images[0].url}
+                              alt=""
+                            />
+                          </div>
+                          <h5 className="total-price">
+                            {item?.productId?.title}
                           </h5>
+                          <div></div>
+                          <div className="flex-grow-1">
+                            <h5 className="total">
+                              ${item?.price * item?.quantity}
+                            </h5>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
-              <div className="border-bottom py-4">
-                <div className="d-flex justify-content-between align-items-center">
-                  <p className="total">Subtotal</p>
-                  <p className="total-price">
-                    $ {totalAmount ? totalAmount : "0"}
-                  </p>
+                    );
+                  })}
+                <div className="border-bottom py-4">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <p className="total">Subtotal</p>
+                    <p className="total-price">
+                      $ {totalAmount ? totalAmount : "0"}
+                    </p>
+                  </div>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <p className="mb-0 total">Shipping</p>
+                    <p className="mb-0 total-price">$ 10</p>
+                  </div>
                 </div>
-                <div className="d-flex justify-content-between align-items-center">
-                  <p className="mb-0 total">Shipping</p>
-                  <p className="mb-0 total-price">$ 10</p>
+                <div className="d-flex justify-content-between align-items-center border-bottom py-4">
+                  <h4 className="total">Total</h4>
+                  <h5 className="total-price">
+                    $ {totalAmount ? totalAmount + 10 : "0"}
+                  </h5>
                 </div>
               </div>
-              <div className="d-flex justify-content-between align-items-center border-bottom py-4">
-                <h4 className="total">Total</h4>
-                <h5 className="total-price">
-                  $ {totalAmount ? totalAmount + 10 : "0"}
-                </h5>
+              <div className="mt-3 d-flex justify-content-center gap-15 align-items-center">
+                <button
+                  className="button border-0 prime-btn"
+                  disabled={!(formik.dirty && formik.isValid)}
+                  type="submit"
+                >
+                  Place-Order
+                </button>
               </div>
-           
             </div>
-            <div className="mt-3 d-flex justify-content-center gap-15 align-items-center">
-                    <button  onClick={()=>{navigate('/my-profile')}}
-                    className="button border-0 prime-btn" disabled={!(formik.dirty && formik.isValid)}>Place-Order</button>
-           </div>
-                   
           </div>
-        </div>
+        </form>
       </Container>
     </>
   );

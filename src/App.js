@@ -30,7 +30,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="forgot-password" element={<Forgetpassword />} />
             <Route path="sign-up" element={<Signup />} />
-            <Route path="reset-password" element={<ResetPassword />} />
+            <Route path="reset-password/:id" element={<ResetPassword />} />
             <Route path="checkout" element={<Checkout />} />
             <Route path="my-profile" element={<UpdateProfile />} />
           </Route>

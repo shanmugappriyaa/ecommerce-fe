@@ -33,8 +33,8 @@ function OurStore() {
     let newBrands = [];
     let category = [];
     let newtags = [];
-    for (let i = 0; i < product.length; i++) {
-      const element = product[i];
+    for (let i = 0; i < product?.length; i++) {
+      const element = product?.[i];
       newBrands.push(element.brand);
       category.push(element.category);
       newtags.push(element.tags);
