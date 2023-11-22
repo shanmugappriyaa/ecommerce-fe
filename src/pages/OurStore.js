@@ -33,20 +33,27 @@ function OurStore() {
     let newBrands = [];
     let category = [];
     let newtags = [];
-    for (let i = 0; i < productState.length; i++) {
-      const element = productState[i];
+    for (let i = 0; i < product.length; i++) {
+      const element = product[i];
       newBrands.push(element.brand);
       category.push(element.category);
       newtags.push(element.tags);
     }
-    setBrands(newBrands);
-    setBrands(catagories);
+    const uniqueCategory = category.filter((obj, index) => {
+      return index === category.findIndex((o) => obj._id === o._id);
+    });
+    const uniqueBrand = newBrands.filter((obj, index) => {
+      return index === newBrands.findIndex((o) => obj._id === o._id);
+    });
+    setBrands(uniqueBrand);
+    setCatagories(uniqueCategory);
     setTags(newtags);
   }, [productState]);
   const getProducts = () => {
-    dispatch(getAllProducts(tag, brand, catagory, minprice, maxprice));
+    dispatch(getAllProducts({ tag, brand, catagory, minprice, maxprice }));
   };
 
+  console.log("catagories-------------->", catagories);
   return (
     <>
       <Meta title={"Our Store"} />
@@ -59,11 +66,11 @@ function OurStore() {
               <div>
                 <ul className="ps-0">
                   {catagories &&
-                    [...new Set(catagories)].map((item, index) => {
+                    catagories.map((item, index) => {
                       return (
-                        <li key={index} onClick={() => setCatagory(item)}>
+                        <li key={index} onClick={() => setCatagory(item._id)}>
                           {" "}
-                          {item}
+                          {item.title}
                         </li>
                       );
                     })}
@@ -131,14 +138,14 @@ function OurStore() {
                 <div>
                   <div className="product-tags d-flex flex-wrap align-items-center gap-10">
                     {brands &&
-                      [...new Set(brands)].map((item, index) => {
+                      brands.map((item, index) => {
                         return (
                           <span
-                            onClick={() => setBrand(item)}
+                            onClick={() => setBrand(item._id)}
                             key={index}
                             className="badge bg-light text-secondary rounded-3 py-2 px-3"
                           >
-                            {item}
+                            {item.title}
                           </span>
                         );
                       })}

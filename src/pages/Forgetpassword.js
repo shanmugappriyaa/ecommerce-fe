@@ -61,7 +61,7 @@ if(authState.isSuccess){
  
   <div>
   <div className='mt-3 d-flex justify-content-center flex-column gap-15 align-items-center'>
-    <buuton className='button border-0' type='submit'>Submit</buuton>
+    <button className='button border-0' type='submit'>Submit</button>
    
     <Link to='/login'>Cancel</Link>
     </div>

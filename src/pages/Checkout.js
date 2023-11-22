@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 
 import Container from "../components/Container";
@@ -9,7 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 function Checkout() {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const cartState = useSelector((state) => state?.auth?.cartProduct);
+  const userState = useSelector((state) => state.auth.user);
   const [totalAmount, setTotalAmount] = useState(null);
 
   useEffect(() => {
@@ -22,10 +24,9 @@ function Checkout() {
   const shippingSchema = Yup.object({
     firstname: Yup.string().required("FirstName is Required"),
     lastname: Yup.string().required("LastName is Required"),
-    address: Yup.string().required("Name is Required"),
-    email: Yup.string()
-      .required("Email should not be empty")
-      .email("Invalid email"),
+    address: Yup.string().required(" Addressis Required"),
+    email: Yup.string(),
+    
     pincode: Yup.number().required("pincode is required"),
     phone: Yup.number().required("phone No is required"),
   });
@@ -80,7 +81,7 @@ function Checkout() {
                 </ol>
               </nav>
               <h4 className="title">Contact Information</h4>
-              <p className="user-details">Raja Murugan(raju@gmail.com)</p>
+              <p className="user-details">{userState?.firstname}({userState?.email})</p>
               <div className="row">
                 <div className="col-md-8 mb-4">
                   <div className="card mb-4">
@@ -153,7 +154,7 @@ function Checkout() {
                             pincode
                           </label>
                           <input
-                            type="number"
+                            type="text"
                             id="form7Example3"
                             className="form-control"
                             value={formik.values.pincode}
@@ -173,9 +174,8 @@ function Checkout() {
                             type="email"
                             id="form7Example5"
                             className="form-control"
-                            value={formik.values.email}
-                            onChange={formik.handleChange("email")}
-                            onBlur={formik.handleBlur("email")}
+                            value={userState?.email}
+                           
                           />
                           <div className="error">
                             {formik.touched.email && formik.errors.email}
@@ -188,7 +188,7 @@ function Checkout() {
                             Phone
                           </label>
                           <input
-                            type="number"
+                            type="text"
                             id="form7Example6"
                             className="form-control"
                             value={formik.values.phone}
@@ -268,7 +268,13 @@ function Checkout() {
                   $ {totalAmount ? totalAmount + 10 : "0"}
                 </h5>
               </div>
+           
             </div>
+            <div className="mt-3 d-flex justify-content-center gap-15 align-items-center">
+                    <button  onClick={()=>{navigate('/my-profile')}}
+                    className="button border-0 prime-btn" disabled={!(formik.dirty && formik.isValid)}>Place-Order</button>
+           </div>
+                   
           </div>
         </div>
       </Container>

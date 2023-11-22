@@ -13,6 +13,7 @@ import ResetPassword from "./pages/ResetPassword";
 import SingleProduct from "./pages/SingleProduct";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
+import UpdateProfile from "./pages/updateProfile";
 function App() {
   return (
     <>
@@ -31,6 +32,7 @@ function App() {
             <Route path="sign-up" element={<Signup />} />
             <Route path="reset-password" element={<ResetPassword />} />
             <Route path="checkout" element={<Checkout />} />
+            <Route path="my-profile" element={<UpdateProfile />} />
           </Route>
         </Routes>
       </BrowserRouter>

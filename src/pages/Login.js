@@ -33,7 +33,7 @@ function Login() {
   });
 
   useEffect(() => {
-    if (authState.isSuccess) {
+    if (authState.user != null  && authState.isError===false) {
       navigate("/");
     }
   }, [authState]);

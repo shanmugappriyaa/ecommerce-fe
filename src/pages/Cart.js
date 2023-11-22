@@ -7,7 +7,7 @@ import { AiFillDelete } from "react-icons/ai";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserCart, deleteCartPoduct } from "../features/user/userSlice";
-import { GiWatch } from "react-icons/gi";
+
 function Cart() {
   const dispatch = useDispatch();
   const userCartState = useSelector((state) => state?.auth?.cartProduct);
@@ -54,8 +54,8 @@ function Cart() {
                   >
                     <div className="cart-col-1  gap-15 d-flex align-items-center">
                       <div className="w-25">
-                        {/* <img src={watch} alt="watch" className="img-fluid" /> */}
-                        <GiWatch />
+                        <img src={item?.productId.images?.[0]?.url} alt="watch" className="img-fluid" />
+                        
                       </div>
                       <div className="w-75">
                         <p>{item?.productId.title}</p>

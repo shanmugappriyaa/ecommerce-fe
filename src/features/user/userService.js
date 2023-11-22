@@ -43,7 +43,7 @@ const removeProductFromCart = async (cartItemId) => {
 };
 const forgotPassToken = async (data) => {
   const response = await axios.post(
-    `${base_url}user/forgot-passowrd-token`,
+    `${base_url}user/forgotPassword`,
     data
   );
   if (response.data) {
@@ -53,13 +53,22 @@ const forgotPassToken = async (data) => {
 
 const resetPass = async (data) => {
   const response = await axios.post(
-    `${base_url}user/reset-passowrd/${data.token}`,
+    `${base_url}user/resetPassword/${data.token}`,
     { password: data?.password }
   );
   if (response.data) {
     return response.data;
   }
 };
+const updateUser = async (data) => {
+  const response = await axios.put(
+    `${base_url}user/edit-user`,data.data,data.config2)
+  
+  if (response.data) {
+    return response.data;
+  }
+};
+
 
 export const authService = {
   register,
@@ -68,5 +77,5 @@ export const authService = {
   addToCart,
   getCart,
   forgotPassToken,
-  resetPass,removeProductFromCart
+  resetPass,removeProductFromCart,updateUser
 };

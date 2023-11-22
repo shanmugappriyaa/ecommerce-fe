@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { authService } from "./userService";
 
 import { toast } from "react-toastify";
+import UpdateProfile from "../../pages/updateProfile";
 
 export const registerUser = createAsyncThunk(
   "auth/register",
@@ -78,6 +79,17 @@ export const deleteCartPoduct = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       return await authService.removeProductFromCart(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const updateProfile = createAsyncThunk(
+  "user/profile/update",
+  async (data, thunkAPI) => {
+    try {
+      return await authService.updateUser(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -245,6 +257,26 @@ export const authSlice = createSlice({
         }
       })
       .addCase(deleteCartPoduct.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        if (state.isSuccess === false) {
+          toast.error("Something  Went Wrong");
+        }
+      }) .addCase(updateProfile.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.updatedUser = action.payload;
+        if (state.isSuccess === true) {
+          toast.info("Profile updated Successfully");
+        }
+      })
+      .addCase(updateProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;

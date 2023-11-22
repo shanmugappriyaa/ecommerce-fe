@@ -148,7 +148,9 @@ function SingleProduct() {
                       className="button  prime-btn border-0"
                       type="button"
                       onClick={() => {
-                        alreadyAdded ? navigate("/cart") : uploadCart();
+                        alreadyAdded ? navigate("/cart") : uploadCart(productState?._id,
+                          quantity,
+                          productState?.price);
                       }}
                     >
                       {alreadyAdded ? "Go To Cart" : "Add to Cart"}
@@ -226,7 +228,7 @@ function SingleProduct() {
                             addToWish(item?._id);
                           }}
                         >
-                          {/* <img src={wish} alt="wishlist" /> */}
+                       
                           <AiOutlineHeart />
                         </button>
                       </div>
