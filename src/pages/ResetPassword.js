@@ -19,7 +19,7 @@ const passwordSchema = Yup.object({
 
 function ResetPassword() {
   const location = useLocation();
-  const getToken = location.pathname.split("/")[2]
+  const userId = location.pathname.split("/")[2]
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ function ResetPassword() {
     },
     validationSchema: passwordSchema,
     onSubmit: (values) => {
-      dispatch(resetPassword({token:getToken,password:values.password}));
+      dispatch(resetPassword({id:userId,password:values.password}));
 
   navigate('/login');
 

@@ -86,7 +86,6 @@ function Header() {
                     to={authState?.user === null ? "/login" : "/my-profile"}
                     className="d-flex align-items-center gap-10 text-white"
                   >
-      
                     <BiUserCircle className="header-icon" />
                     {authState?.user === null ? (
                       <p className="mb-0">
@@ -122,25 +121,37 @@ function Header() {
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
-              <div className="menu-bottom d-flex align-items-center gap-30">
-                <div>
-                <button className="btn btn-primary" type="button" disabled>
-  <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-  Premium Brands</button>
-                </div>
-                <div className="menu-links"></div>
-                <div className="d-flex align-items-center gap-15">
-                  <NavLink to="/">Home</NavLink>
-                  <NavLink to="/product">Our Store</NavLink>
-                  <NavLink to="/contact">Contact</NavLink>
-                  <button
-                    onClick={handleLogout}
-                    className="border border-0 bg-transparent text-white"
-                  >
-                    {" "}
-                    LOGOUT
+              <div className="menu-bottom d-flex align-items-center justify-content-between gap-30">
+              
+              <button className="btn btn-primary" type="button" disabled>
+                    <span
+                      className="spinner-grow spinner-grow-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                    Premium Brands
                   </button>
-                </div>
+                
+
+                <div className="menu-links">
+               
+                  <div className="d-flex align-items-center gap-15">
+              
+                    <NavLink to="/">Home</NavLink>
+                    <NavLink to="/product">Our Store</NavLink>
+                    <NavLink to="/contact">Contact</NavLink>
+                  </div>
+                  </div>
+                  <div>
+                    <button
+                      onClick={handleLogout}
+                      className="border border-0 bg-transparent text-white"
+                    >
+                      {" "}
+                      LOGOUT
+                    </button>
+                  </div>
+                
               </div>
             </div>
           </div>
