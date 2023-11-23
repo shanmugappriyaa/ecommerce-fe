@@ -3,13 +3,13 @@ import ReactStars from "react-rating-stars-component";
 import { Link } from "react-router-dom";
 
 import { addToWishlist } from "../features/products/productSlice";
-import Marquee from "react-fast-marquee";
+
 import ProductCard from "../components/ProductCard";
 import Container from "../components/Container";
 import { services } from "../utils/Data";
 
-import { AiOutlineCamera, AiOutlineHeart } from "react-icons/ai";
-import { GiWatch } from "react-icons/gi";
+import {  AiOutlineHeart } from "react-icons/ai";
+
 
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../features/products/productSlice";
@@ -31,6 +31,59 @@ function Home() {
 
   return (
     <>
+   
+
+      <Container class1="banner-wrapper pt-5 px-4 home-wrapper-2">
+        <div id="carouselExample" className="carousel slide">
+          <div className="carousel-inner banner-height">
+            {product &&
+              product?.map((item, index) => {
+                if (item?.tags === "upcoming") {
+                  console.log("product irem-->", item);
+                  return (
+                    <div
+                      key={index}
+                      className={
+                        index === 0 ? "carousel-item active" : "carousel-item"
+                      }
+                    >
+                      <img
+                        src={item?.images?.[0]?.url}
+                        className="d-block w-100 "
+                        alt="..."
+                      />
+                    </div>
+                  );
+                }
+              })}
+       
+          </div>
+          <button
+            className="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExample"
+            data-bs-slide="prev"
+          >
+            <span
+              className="carousel-control-prev-icon"
+              aria-hidden="true"
+            ></span>
+            <span className="visually-hidden">Previous</span>
+          </button>
+          <button
+            className="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExample"
+            data-bs-slide="next"
+          >
+            <span
+              className="carousel-control-next-icon"
+              aria-hidden="true"
+            ></span>
+            <span className="visually-hidden">Next</span>
+          </button>
+        </div>
+      </Container>
       <Container class1="home-wrapper-2 pt-5 px-4">
         <div className="row">
           <div className="col-12">
@@ -38,7 +91,7 @@ function Home() {
               {services?.map((i, j) => {
                 return (
                   <div className="d-flex align-items-center gap-20" key={j}>
-                    {/* <img src={i.image} alt="services" /> */}
+                
                     {i.image}
                     <div className="ps-2">
                       <h6>{i.title}</h6>
@@ -51,72 +104,8 @@ function Home() {
           </div>
         </div>
       </Container>
-
-      <Container class1="home-wrapper-2 py-5">
-        <div className="row">
-          <div className="col-12">
-            <div className="categories d-flex justify-content-between flex-wrap align-items-center">
-              <div className="d-flex  align-items-center">
-                <div>
-                  <h6>Camera</h6>
-                  <p>10items</p>
-                </div>
-                <GiWatch className="header-icon" />
-              </div>
-              <div className="d-flex  align-items-center">
-                <div>
-                  <h6>Smart Tv</h6>
-                  <p>10items</p>
-                </div>
-                <AiOutlineCamera className="header-icon" />
-              </div>
-              <div className="d-flex  align-items-center">
-                <div>
-                  <h6>Smart Watches</h6>
-                  <p>10items</p>
-                </div>
-                <GiWatch className="header-icon" />
-              </div>
-              <div className="d-flex  align-items-center">
-                <div>
-                  <h6>Music & Gaming</h6>
-                  <p>10items</p>
-                </div>
-                <AiOutlineCamera className="header-icon" />
-              </div>
-              <div className="d-flex  align-items-center">
-                <div>
-                  <h6>Camera</h6>
-                  <p>10items</p>
-                </div>
-                <GiWatch className="header-icon" />
-              </div>
-              <div className="d-flex  align-items-center">
-                <div>
-                  <h6>Smart Tv</h6>
-                  <p>10items</p>
-                </div>
-                <AiOutlineCamera className="header-icon" />
-              </div>
-              <div className="d-flex  align-items-center">
-                <div>
-                  <h6>Smart Tv</h6>
-                  <p>10items</p>
-                </div>
-                <GiWatch className="header-icon" />
-              </div>
-              <div className="d-flex  align-items-center">
-                <div>
-                  <h6>Smart Tv</h6>
-                  <p>10items</p>
-                </div>
-                <AiOutlineCamera className="header-icon" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </Container>
-      <Container class1="featured-wrapper  px-4 home-wrapper-2">
+   
+      <Container class1="featured-wrapper pt-5 px-4 home-wrapper-2">
         <div className="row">
           <div className="col-12">
             <h3 className="section-heading">Featured Collection</h3>

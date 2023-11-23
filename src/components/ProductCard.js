@@ -16,6 +16,7 @@ function ProductCard(props) {
   return (
     <>
       {data?.map((item, index) => {
+         if (item?.tags !== "upcoming") {
         return (
           <div
             key={index}
@@ -73,6 +74,7 @@ function ProductCard(props) {
             </div>
           </div>
         );
+                }
       })}
 
       {/* <div

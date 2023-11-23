@@ -172,55 +172,7 @@ function OurStore() {
                   </div>
                 </div>
               </div>
-              {/* <div className="filter-card mb-3">
-                <h3 className="filter-title">Random Product</h3>
-                <div>
-                  <div className="random-products mb-3 d-flex ">
-                    <div className="w-50">
-                      <img
-                        src={commonFile}
-                        className="img-fluid"
-                        alt="watch"
-                      />
-                    </div>
-                    <div className="w-50">
-                      <h5>
-                        Kids headphones bulk 10 pack multi colored for students
-                      </h5>
-                      <ReactStars
-                        count={5}
-                        size={24}
-                        value={4}
-                        edit={false}
-                        activeColor="#ffd700"
-                      />
-                      <b>$100.00</b>
-                    </div>
-                  </div>
-                  <div className="random-products d-flex ">
-                    <div className="w-50">
-                      <img
-                        src={commonFile}
-                        className="img-fluid"
-                        alt="watch"
-                      />
-                    </div>
-                    <div className="w-50">
-                      <h5>
-                        Kids headphones bulk 10 pack multi colored for students
-                      </h5>
-                      <ReactStars
-                        count={5}
-                        size={24}
-                        value={4}
-                        edit={false}
-                        activeColor="#ffd700"
-                      />
-                      <b>$100.00</b>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
+         
             </div>
           </div>
           <div className="col-9">
@@ -282,7 +234,9 @@ function OurStore() {
               </div>
             </div>
             <div className="products-list pb-5">
+              
               <div className="d-flex gap-10 flex-wrap">
+
                 <ProductCard data={product ? product : []} grid={grid} />
               </div>
             </div>
