@@ -54,6 +54,16 @@ export const getUserCart = createAsyncThunk(
     }
   }
 );
+export const getUserOrders = createAsyncThunk(
+  "user/Orders",
+  async (thunkAPI) => {
+    try {
+      return await authService.getOrders();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 export const deleteUserCart = createAsyncThunk(
   "user/cart/delete",
   async (thunkAPI) => {
@@ -274,7 +284,8 @@ export const authSlice = createSlice({
         if (state.isSuccess === false) {
           toast.error("Something  Went Wrong");
         }
-      }) .addCase(updateProfile.pending, (state) => {
+      })
+      .addCase(updateProfile.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(updateProfile.fulfilled, (state, action) => {
@@ -294,7 +305,8 @@ export const authSlice = createSlice({
         if (state.isSuccess === false) {
           toast.error("Something  Went Wrong");
         }
-      }).addCase(deleteUserCart.pending, (state) => {
+      })
+      .addCase(deleteUserCart.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(deleteUserCart.fulfilled, (state, action) => {
@@ -302,9 +314,29 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.deleteCart = action.payload;
-  
+        if (state.isSuccess === true) {
+          toast.error("Order placed Suceesfully");
+        }
       })
       .addCase(deleteUserCart.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        if (state.isSuccess === false) {
+          toast.error("Something  Went Wrong");
+        }
+      })
+      .addCase(getUserOrders.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getUserOrders.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.orders = action?.payload;
+      })
+      .addCase(getUserOrders.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;

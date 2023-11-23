@@ -1,11 +1,11 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import Container from "../components/Container";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUser } from "../features/user/userSlice";
+import { getUserOrders } from "../features/user/userSlice";
 import { useNavigate } from "react-router-dom";
 
 const profileSchema = Yup.object({
@@ -14,14 +14,14 @@ const profileSchema = Yup.object({
   mobile: Yup.string().required("mobile no is required "),
   email: Yup.string()
     .required("Email should not be empty")
-    .email("Invalid email")
+    .email("Invalid email"),
 });
 
 function UpdateProfile() {
-    const getTokenFromLocalStorage = localStorage.getItem("customer")
-  ? JSON.parse(localStorage.getItem("customer"))
-  : null;
-   const config2 = {
+  const getTokenFromLocalStorage = localStorage.getItem("customer")
+    ? JSON.parse(localStorage.getItem("customer"))
+    : null;
+  const config2 = {
     headers: {
       Authorization: `Bearer ${
         getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
@@ -29,36 +29,42 @@ function UpdateProfile() {
       Accept: "application/json",
     },
   };
-//   const navigate = useNavigate();
+  //   const navigate = useNavigate();
   const userState = useSelector((state) => state.auth.user);
-  const userCartState = useSelector((state) => state?.auth?.cartProduct);
-//   const[edit,setEdit]= useState[true]
+  // const userCartState = useSelector((state) => state?.auth?.cartProduct);
+  const userOrderState = useSelector(
+    (state) => state?.auth?.orders?.userOrders
+  );
+
+  console.log("userOrderState====>", userOrderState);
+
+  //   const[edit,setEdit]= useState[true]
   const dispatch = useDispatch();
   const formik = useFormik({
-    enableReinitialize:true,
+    enableReinitialize: true,
     initialValues: {
       firstname: userState?.firstname,
-      lastname:  userState?.lastname,
+      lastname: userState?.lastname,
       email: userState?.email,
-      mobile:  userState?.mobile,
-
+      mobile: userState?.mobile,
     },
     onSubmit: (values) => {
-      dispatch(values)
-    //   dispatch(UpdateProfile({data:values,config2:config2}));
-    //   setEdit(true)
+      dispatch(values);
+      //   dispatch(UpdateProfile({data:values,config2:config2}));
+      //   setEdit(true)
     },
     validationSchema: profileSchema,
   });
-//   useEffect(() => {
-
-//     if (
-//       (authState.user !== null && authState.isError === false) ||
-//       authState.createUser
-//     ) {
-//       navigate("/login");
-//     }
-//   }, [authState]);
+  useEffect(() => {
+    dispatch(getUserOrders());
+  }, []);
+  //     if (
+  //       (authState.user !== null && authState.isError === false) ||
+  //       authState.createUser
+  //     ) {
+  //       navigate("/login");
+  //     }
+  //   }, [authState]);
   return (
     <>
       <Meta title={"UpdateProfile"} />
@@ -109,7 +115,6 @@ function UpdateProfile() {
                     className="form-control"
                     value={userState?.email}
                   />
-             
                 </div>
                 <div>
                   <input
@@ -125,12 +130,11 @@ function UpdateProfile() {
                     {formik.touched.mobile && formik.errors.mobile}
                   </div>
                 </div>
-           
+
                 <div>
-                <div className="mt-3 d-flex justify-content-center gap-15 align-items-center">
+                  <div className="mt-3 d-flex justify-content-center gap-15 align-items-center">
                     <button className="button prime-btn border-0">Save</button>
                   </div>
-               
                 </div>
               </form>
             </div>
@@ -140,49 +144,40 @@ function UpdateProfile() {
       <Container class1="cart-wrapper home-wrapper-2 p-5">
         <div className="row align-items-center">
           <div className="col-12">
-          <h2> Order Details</h2>
+            <h2> Order Details</h2>
             <div className="cart-header py-3 d-flex justify-content-between align-items-center">
-       
-              <h4 className="cart-col-1">Product</h4>
-              <h4 className="cart-col-2">Price</h4>
+              <h4 className="cart-col-2">Date</h4>
+              <h4 className="cart-col-1">OrderId</h4>
               <h4 className="cart-col-3">Quantity</h4>
               <h4 className="cart-col-4">Total</h4>
             </div>
-            {userCartState &&
-              userCartState?.map((item, index) => {
+            {userOrderState &&
+              userOrderState?.map((item, index) => {
                 return (
                   <div
                     key={index}
                     className="cart-data py-3 mb-2  d-flex justify-content-between align-items-center"
                   >
-                    <div className="cart-col-1  gap-15 d-flex align-items-center">
-                      <div className="w-25">
-                        <img src={item?.productId.images?.[0]?.url} alt="watch" className="img-fluid" />
-                     
-                      </div>
-                      <div className="w-75">
-                        <p>{item?.productId.title}</p>
-                      </div>
-                    </div>
                     <div className="cart-col-2">
-                      <h5 className="Price">$ {item?.productId.price}</h5>
+                      {item?.createdAt?.split("T")?.[0]}
                     </div>
+                    <div className="cart-col-1  gap-15 d-flex align-items-center">
+                      <div className="w-75">
+                        <p>{item?._id} </p>
+                      </div>
+                    </div>
+
                     <div className="cart-col-3 d-flex align-items-center gap-15">
                       <div>
-                      <h5 className="Price">{item?.quantity}</h5>
-                        
+                        <h5 className="Price">{item?.orderItems?.length}</h5>
                       </div>
-                
                     </div>
                     <div className="cart-col-4">
-                      <h5 className="Price">
-                        $ {item?.quantity * item?.price}
-                      </h5>
+                      <h5 className="Price">$ {item?.totalPrice}</h5>
                     </div>
                   </div>
                 );
               })}
-
           </div>
         </div>
       </Container>

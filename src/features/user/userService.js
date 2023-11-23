@@ -35,6 +35,13 @@ const getCart = async () => {
     return response.data;
   }
 };
+const getOrders = async () => {
+  const response = await axios.get(`${base_url}user/get-orders`, config);
+  console.log("getorderresponse---->",response);
+  if (response.data) {
+    return response.data;
+  }
+};
 const emptyCart = async () => {
   const response = await axios.delete(`${base_url}user/empty-cart`, config);
   if (response.data) {
@@ -82,6 +89,6 @@ export const authService = {
   getuserWishlist,
   addToCart,
   getCart,
-  forgotPassToken,
+  forgotPassToken,getOrders,
   resetPass,removeProductFromCart,updateUser,emptyCart
 };
