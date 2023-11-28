@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { authService } from "./userService";
 
 import { toast } from "react-toastify";
-import UpdateProfile from "../../pages/updateProfile";
+
 
 export const registerUser = createAsyncThunk(
   "auth/register",
@@ -94,6 +94,16 @@ export const resetPassword = createAsyncThunk(
     }
   }
 );
+export const createAnOrder = createAsyncThunk(
+  "user/cart/create-order",
+  async (orderDeatail, thunkAPI) => {
+    try {
+      return await authService.createOrder(orderDeatail);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 export const deleteCartPoduct = createAsyncThunk(
   "user/cart/product/delete",
   async (id, thunkAPI) => {
@@ -105,7 +115,7 @@ export const deleteCartPoduct = createAsyncThunk(
   }
 );
 
-export const updateProfile = createAsyncThunk(
+export const updateUserProfile = createAsyncThunk(
   "user/profile/update",
   async (data, thunkAPI) => {
     try {
@@ -130,7 +140,11 @@ const initialState = {
 export const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    auth_reset: (state, action) => {
+      state.auth = undefined;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(registerUser.pending, (state) => {
@@ -285,19 +299,19 @@ export const authSlice = createSlice({
           toast.error("Something  Went Wrong");
         }
       })
-      .addCase(updateProfile.pending, (state) => {
+      .addCase(updateUserProfile.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(updateProfile.fulfilled, (state, action) => {
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.updatedUser = action.payload;
+        state.user = action.payload;
         if (state.isSuccess === true) {
-          toast.info("Profile updated Successfully");
+          toast.success("Profile updated Successfully");
         }
       })
-      .addCase(updateProfile.rejected, (state, action) => {
+      .addCase(updateUserProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
@@ -314,9 +328,7 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.deleteCart = action.payload;
-        if (state.isSuccess === true) {
-          toast.error("Order placed Suceesfully");
-        }
+        state.orderedProduct = null;
       })
       .addCase(deleteUserCart.rejected, (state, action) => {
         state.isLoading = false;
@@ -344,8 +356,31 @@ export const authSlice = createSlice({
         if (state.isSuccess === false) {
           toast.error("Something  Went Wrong");
         }
+      })
+      .addCase(createAnOrder.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createAnOrder.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.orderedProduct = action?.payload;
+        console.log("action.payload------>", action?.payload);
+        if (state.isSuccess === true) {
+          toast.success("Ordered Successfully");
+        }
+      })
+      .addCase(createAnOrder.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        if (state.isSuccess === false) {
+          toast.error("Something  Went Wrong");
+        }
       });
   },
 });
 
+export const { auth_reset } = authSlice.actions;
 export default authSlice.reducer;

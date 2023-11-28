@@ -9,6 +9,7 @@ export const store = configureStore({
     auth: authReducer,
     product: productReducer,
     contact: contactReducer,
-    brand: brandReducer
-  }
+    brand: brandReducer,
+  },
 });
+

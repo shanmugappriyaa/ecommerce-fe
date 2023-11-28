@@ -14,6 +14,7 @@ import SingleProduct from "./pages/SingleProduct";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import UpdateProfile from "./pages/updateProfile";
+import MyOrder from "./pages/MyOrder";
 function App() {
   return (
     <>
@@ -24,6 +25,7 @@ function App() {
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
             <Route path="product" element={<OurStore />} />
+            <Route path="myorders" element={<MyOrder/>} />
             <Route path="product/:id" element={<SingleProduct />} />
             <Route path="wishlist" element={<Wishlist />} />
             <Route path="cart" element={<Cart />} />

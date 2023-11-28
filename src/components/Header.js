@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { BsCart4 } from "react-icons/bs";
 import { RxDropdownMenu } from "react-icons/rx";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BiUserCircle } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
-
+import { auth_reset } from "../features/user/userSlice";
+import { product_reset } from "../features/products/productSlice";
+import { brand_reset } from "../features/brand/brandSlice";
+import { contact_reset } from "../features/contacts/contactSlice";
 function Header() {
   const [total, setTotal] = useState(null);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const authState = useSelector((state) => state.auth);
   const cartState = useSelector((state) => state?.auth?.cartProduct);
@@ -23,8 +27,11 @@ function Header() {
   }, [cartState]);
   const handleLogout = () => {
     localStorage.clear();
+    dispatch(auth_reset());
+
     window.location.reload();
   };
+
   return (
     <>
       <header className="header-top-strip py-3 px-4">
@@ -117,13 +124,13 @@ function Header() {
           </div>
         </div>
       </header>
-      <header className="header-bottom py-3 px-4">
-        <div className="container-xxl">
-          <div className="row">
-            <div className="col-12">
-              <div className="menu-bottom d-flex align-items-center justify-content-between gap-30">
-              
-              <button className="btn btn-primary" type="button" disabled>
+      {authState?.user && (
+        <header className="header-bottom py-3 px-4">
+          <div className="container-xxl">
+            <div className="row">
+              <div className="col-12">
+                <div className="menu-bottom d-flex align-items-center justify-content-between gap-30">
+                  <button className="btn btn-primary" type="button" disabled>
                     <span
                       className="spinner-grow spinner-grow-sm"
                       role="status"
@@ -131,34 +138,77 @@ function Header() {
                     ></span>
                     Premium Brands
                   </button>
-                
 
-                <div className="menu-links">
-               
-                  <div className="d-flex align-items-center gap-15">
-              
-                    <NavLink to="/">Home</NavLink>
-                    <NavLink to="/product">Our Store</NavLink>
-                    <NavLink to="/contact">Contact</NavLink>
-                  </div>
+                  <div className="menu-links">
+                    <div className="d-flex align-items-center gap-15">
+                      <NavLink
+                        to="/"
+                        className={({ isActive, isPending }) =>
+                          isPending
+                            ? "pending_nav"
+                            : isActive
+                            ? "active_nav"
+                            : ""
+                        }
+                      >
+                        Home
+                      </NavLink>
+                      <NavLink
+                        to="/product"
+                        className={({ isActive, isPending }) =>
+                          isPending
+                            ? "pending_nav"
+                            : isActive
+                            ? "active_nav"
+                            : ""
+                        }
+                      >
+                        Our Store
+                      </NavLink>
+                      <NavLink
+                        to="/myorders"
+                        className={({ isActive, isPending }) =>
+                          isPending
+                            ? "pending_nav"
+                            : isActive
+                            ? "active_nav"
+                            : ""
+                        }
+                      >
+                        MY-ORDERS
+                      </NavLink>
+                      <NavLink
+                        to="/contact"
+                        className={({ isActive, isPending }) =>
+                          isPending
+                            ? "pending_nav"
+                            : isActive
+                            ? "active_nav"
+                            : ""
+                        }
+                      >
+                        Contact
+                      </NavLink>
+                    </div>
                   </div>
                   <div>
                     <button
                       onClick={handleLogout}
-                      className="border border-0 bg-transparent text-white"
+                      className="btn btn-primary text-white"
                     >
                       {" "}
                       LOGOUT
                     </button>
                   </div>
-                
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </header>
+        </header>
+      )}
     </>
   );
 }
 
 export default Header;
+// /"border border-0 bg-transparent text-white"

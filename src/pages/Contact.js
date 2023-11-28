@@ -7,9 +7,10 @@ import Container from "../components/Container";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 const contactSchema = Yup.object({
-  naame: Yup.string().required("first Name is required "),
+  fname: Yup.string().required("Name is required "),
   mobile: Yup.string().required("mobile no is required "),
   email: Yup.string()
     .required("Email should not be empty")
@@ -22,13 +23,14 @@ function Contact() {
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      name: "",
+      fname: "",
       email: "",
       mobile: "",
       comment: "",
     },
-    onSubmit: (values) => {
-      // dispatch(registerUser(values));
+    onSubmit: (values,{resetForm}) => {
+      toast.success("Query Submitted Successfully");
+      resetForm();
     },
     validationSchema: contactSchema,
   });
@@ -46,15 +48,15 @@ function Contact() {
                   <div>
                     <input
                       type="text"
-                      name="name"
+                      name="fname"
                       className="form-control"
                       placeholder="Name"
-                      value={formik.values.name}
-                      onChange={formik.handleChange("name")}
-                      onBlur={formik.handleBlur("name")}
+                      value={formik.values.fname}
+                      onChange={formik.handleChange("fname")}
+                      onBlur={formik.handleBlur("fname")}
                     />
                     <div className="error">
-                      {formik.touched.name && formik.errors.name}
+                      {formik.touched.fname && formik.errors.fname}
                     </div>
                   </div>
                   <div>
@@ -92,7 +94,7 @@ function Contact() {
                       cols="30"
                       rows="4"
                       placeholder="comments"
-                      value={formik.values.comments}
+                      value={formik.values.comment}
                       onChange={formik.handleChange("comment")}
                       onBlur={formik.handleBlur("comment")}
                     ></textarea>
@@ -101,7 +103,7 @@ function Contact() {
                     </div>
                   </div>
                   <div>
-                    <button className="button border-0">Submit</button>
+                    <button  className="button sec-btn signup ps-4">Submit</button>
                   </div>
                 </form>
               </div>

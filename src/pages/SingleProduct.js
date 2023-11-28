@@ -22,6 +22,7 @@ function SingleProduct() {
   const productState = useSelector(
     (state) => state?.product?.singleproduct?.product
   );
+  const authState = useSelector((state) => state?.auth);
   const cartState = useSelector((state) => state?.auth?.cartProduct);
   const productListState = useSelector((state) => state?.product?.product);
   const { product } = productListState;
@@ -44,9 +45,11 @@ function SingleProduct() {
         productId: productState?._id,
         quantity,
         price: productState?.price,
-      }),
-      navigate("/cart")
+      })
     );
+    setTimeout(() => {
+      navigate("/cart");
+    }, 2000);
   };
   const props = {
     width: 400,
@@ -70,7 +73,9 @@ function SingleProduct() {
           <div className="col-6">
             <div className="main-product-image">
               <div>
-                <ReactImageZoom {...props} />
+                {/* <ReactImageZoom {...props} /> */}
+               <img src={productState?.images[0]?.url
+      && productState.images[0].url} alt=" product image"  />
               </div>
             </div>
           </div>
@@ -148,9 +153,13 @@ function SingleProduct() {
                       className="button  prime-btn border-0"
                       type="button"
                       onClick={() => {
-                        alreadyAdded ? navigate("/cart") : uploadCart(productState?._id,
-                          quantity,
-                          productState?.price);
+                        alreadyAdded
+                          ? navigate("/cart")
+                          : uploadCart(
+                              productState?._id,
+                              quantity,
+                              productState?.price
+                            );
                       }}
                     >
                       {alreadyAdded ? "Go To Cart" : "Add to Cart"}
@@ -228,7 +237,6 @@ function SingleProduct() {
                             addToWish(item?._id);
                           }}
                         >
-                       
                           <AiOutlineHeart />
                         </button>
                       </div>

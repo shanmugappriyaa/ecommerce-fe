@@ -1,21 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
-
+import axios from "axios";
 import Container from "../components/Container";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
+import { getConfig } from "../utils/axiosConfig";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUserCart } from "../features/user/userSlice";
+import { createAnOrder, deleteUserCart } from "../features/user/userSlice";
+
+const shippingSchema = Yup.object({
+  firstname: Yup.string().required("FirstName is Required"),
+  lastname: Yup.string().required("LastName is Required"),
+  address: Yup.string().required(" Addressis Required"),
+  email: Yup.string(),
+
+  pincode: Yup.number().required("pincode is required"),
+  phone: Yup.number().required("phone No is required"),
+});
 
 function Checkout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cartState = useSelector((state) => state?.auth?.cartProduct);
   const userState = useSelector((state) => state.auth.user);
+  const orderdProductState = useSelector(
+    (state) => state?.auth?.orderedProduct
+  );
   const [totalAmount, setTotalAmount] = useState(null);
   const [shippingInfo, setShippingInfo] = useState(null);
+  const [paymentInfo, setPaymentInfo] = useState(null);
+  const [CartProductState, setCartProductState] = useState([]);
 
   useEffect(() => {
     let sum = 0;
@@ -24,15 +39,19 @@ function Checkout() {
       setTotalAmount(sum);
     }
   }, [cartState]);
-  const shippingSchema = Yup.object({
-    firstname: Yup.string().required("FirstName is Required"),
-    lastname: Yup.string().required("LastName is Required"),
-    address: Yup.string().required(" Addressis Required"),
-    email: Yup.string(),
 
-    pincode: Yup.number().required("pincode is required"),
-    phone: Yup.number().required("phone No is required"),
-  });
+  useEffect(() => {
+    let items = [];
+    for (let index = 0; index < cartState?.length; index++) {
+      items.push({
+        product: cartState[index].productId._id,
+        quantity: cartState[index].quantity,
+        price: cartState[index].price,
+      });
+    }
+    setCartProductState(items);
+  }, []);
+
   const formik = useFormik({
     initialValues: {
       firstname: "",
@@ -42,13 +61,114 @@ function Checkout() {
       pincode: "",
       phone: "",
     },
-    onSubmit: (values) => {
-      dispatch(deleteUserCart());
-      // setShippingInfo(values);
-      navigate("/my-profile");
-    },
     validationSchema: shippingSchema,
+    onSubmit: (values) => {
+      console.log("shipping form values------------>", CartProductState);
+      // setShippingInfo(values);
+      dispatch(
+        createAnOrder({
+          totalPrice: totalAmount,
+          orderItems: CartProductState,
+          paymentInfo,
+          shippingInfo: { values },
+        })
+      );
+      // navigate("/my-profile");
+    },
   });
+
+  useEffect(() => {
+    if (orderdProductState?.order?._id) {
+      setTimeout(() => {
+        checkoutHandler(orderdProductState?.order);
+      }, 300);
+    }
+  }, [orderdProductState]);
+
+  const loadScript = (src) => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  };
+
+  const checkoutHandler = async (orderInfo) => {
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
+    if (!res) {
+      alert("Razorpay SDK fail to load");
+      return;
+    }
+    const result = await axios.post(
+      "http://localhost:8000/user/order/checkout",
+      { amount: orderInfo.totalPrice, orderId: orderInfo._id },
+      getConfig()
+    );
+    console.log("result================>", result.data.order);
+    if (!result) {
+      alert("Something Went wrong after payment");
+      return;
+    }
+    const { amount, currency } = result.data.order;
+    const order_id = result.data.order.id;
+
+    console.log("inside------------> amount", amount, order_id);
+    console.log("currency------------> currency", currency);
+
+    const options = {
+      key: "rzp_test_wFCbHhLefrZ450", // Enter the Key ID generated from the Dashboard
+      amount: amount,
+      currency: currency,
+      name: "Shanmart.",
+      description: "Test Transaction",
+
+      order_id: order_id,
+      handler: async function (response) {
+        const data = {
+          orderCreationId: order_id,
+          razorpayPaymentId: response.razorpay_payment_id,
+          razorpayOrderId: response.razorpay_order_id,
+        };
+
+        console.log("inside------------> data", data);
+
+        const result = await axios.post(
+          "http://localhost:8000/user/order/paymentVerification",
+          data,
+          getConfig()
+        );
+
+        console.log("inside------------> result", result);
+        setPaymentInfo({
+          razorpayPaymentId: response.razorpay_payment_id,
+          razorpayOrderId: response.razorpay_order_id,
+        });
+        dispatch(deleteUserCart());
+      },
+      prefill: {
+        name: "ShanMart",
+        email: "shanmrt@example.com",
+        contact: "9999999999",
+      },
+      notes: {
+        address: "ShanMart Corporate Office",
+      },
+      theme: {
+        color: "#61dafb",
+      },
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  };
 
   return (
     <>
@@ -206,8 +326,8 @@ function Checkout() {
                             <BiArrowBack className="mt-2" />
                             Return to Cart
                           </Link>
-                          <Link to="/cart" className="button">
-                            Continue to shipping
+                          <Link to="/home" className="button">
+                            Continue to sh0pping
                           </Link>
                         </div>
                       </div>

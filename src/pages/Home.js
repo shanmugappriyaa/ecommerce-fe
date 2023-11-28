@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import ReactStars from "react-rating-stars-component";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { addToWishlist } from "../features/products/productSlice";
 
@@ -8,20 +8,20 @@ import ProductCard from "../components/ProductCard";
 import Container from "../components/Container";
 import { services } from "../utils/Data";
 
-import {  AiOutlineHeart } from "react-icons/ai";
-
+import { AiOutlineHeart } from "react-icons/ai";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../features/products/productSlice";
 
 function Home() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     getallProducts();
   }, []);
   const productState = useSelector((state) => state?.product?.product);
   const { product } = productState;
-
+  const authState = useSelector((state) => state.auth);
   const getallProducts = () => {
     dispatch(getAllProducts());
   };
@@ -29,10 +29,13 @@ function Home() {
     dispatch(addToWishlist(id));
   };
 
+  useEffect(() => {
+    console.log("authState----------------->", authState);
+    authState?.user === null && navigate("/login");
+  }, [authState]);
+
   return (
     <>
-   
-
       <Container class1="banner-wrapper pt-5 px-4 home-wrapper-2">
         <div id="carouselExample" className="carousel slide">
           <div className="carousel-inner banner-height">
@@ -56,7 +59,6 @@ function Home() {
                   );
                 }
               })}
-       
           </div>
           <button
             className="carousel-control-prev"
@@ -91,7 +93,6 @@ function Home() {
               {services?.map((i, j) => {
                 return (
                   <div className="d-flex align-items-center gap-20" key={j}>
-                
                     {i.image}
                     <div className="ps-2">
                       <h6>{i.title}</h6>
@@ -104,7 +105,7 @@ function Home() {
           </div>
         </div>
       </Container>
-   
+
       <Container class1="featured-wrapper pt-5 px-4 home-wrapper-2">
         <div className="row">
           <div className="col-12">

@@ -23,7 +23,11 @@ const contactState = {
 export const contactSlice = createSlice({
   name: "contact",
   initialState: contactState,
-  reducers: {},
+  reducers: {
+    contact_reset: (state, action) => {
+      state.contact = undefined;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createQuery.pending, (state) => {
@@ -52,5 +56,5 @@ export const contactSlice = createSlice({
 
   },
 });
-
+export const {contact_reset} = contactSlice.actions;
 export default contactSlice.reducer;

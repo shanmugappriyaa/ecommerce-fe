@@ -1,5 +1,5 @@
 import axios from "axios";
-import { base_url, config } from "../../utils/axiosConfig";
+import { base_url, getConfig } from "../../utils/axiosConfig";
 
 const register = async (userData) => {
   console.log("register Req------------> ", userData);
@@ -18,32 +18,32 @@ const login = async (userData) => {
 };
 
 const getuserWishlist = async () => {
-  const response = await axios.get(`${base_url}user/wishlist`, config);
+  const response = await axios.get(`${base_url}user/wishlist`, getConfig());
   if (response.data) {
     return response.data;
   }
 };
 const addToCart = async (cartData) => {
-  const response = await axios.post(`${base_url}user/cart`, cartData, config);
+  const response = await axios.post(`${base_url}user/add-to-cart`, cartData, getConfig());
   if (response.data) {
     return response.data;
   }
 };
 const getCart = async () => {
-  const response = await axios.get(`${base_url}user/cart`, config);
+  const response = await axios.get(`${base_url}user/cart`, getConfig());
   if (response.data) {
     return response.data;
   }
 };
 const getOrders = async () => {
-  const response = await axios.get(`${base_url}user/get-orders`, config);
+  const response = await axios.get(`${base_url}user/getmyorders`, getConfig());
   console.log("getorderresponse---->", response);
   if (response.data) {
     return response.data;
   }
 };
 const emptyCart = async () => {
-  const response = await axios.delete(`${base_url}user/empty-cart`, config);
+  const response = await axios.delete(`${base_url}user/empty-cart`, getConfig());
   if (response.data) {
     return response.data;
   }
@@ -51,7 +51,7 @@ const emptyCart = async () => {
 const removeProductFromCart = async (cartItemId) => {
   const response = await axios.delete(
     `${base_url}user/delete-product-cart/${cartItemId}`,
-    config
+    getConfig()
   );
   if (response.data) {
     return response.data;
@@ -74,14 +74,19 @@ const updateUser = async (data) => {
   const response = await axios.put(
     `${base_url}user/edit-user`,
     data.data,
-    data.config2
+    getConfig()
   );
 
   if (response.data) {
     return response.data;
   }
 };
-
+const createOrder = async (orderDeatail) => {
+  const response = await axios.post(`${base_url}user/cart/create-order`, orderDeatail,getConfig());
+  if (response.data) {
+    return response.data;
+  }
+};
 export const authService = {
   register,
   login,
@@ -94,4 +99,5 @@ export const authService = {
   removeProductFromCart,
   updateUser,
   emptyCart,
+  createOrder
 };

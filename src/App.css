@@ -416,8 +416,7 @@ footer .input-group-text {
   line-height: 20px;
   margin-bottom: 10px;
 }
-.main-product-details .t-review
- {
+.main-product-details .t-review {
   color: var(--color-777777);
   font-size: 13px;
 }
@@ -518,15 +517,25 @@ footer .input-group-text {
   padding: 4px 8px;
   background: var(--color-f5f5f7);
 }
-.order-data{
-  font-size:14px;
+.order-data {
+  font-size: 14px;
   color: #777777;
 }
-.cart-header h4{
-  font-size:14px;
+.cart-header h4 {
+  font-size: 14px;
   color: #777777;
   font-weight: bold;
 }
-.banner-height{
+.banner-height {
   height: 250px;
+}
+
+.pending_nav {
+  text-decoration: none;
+}
+
+.active_nav {
+  text-decoration: underline;
+  text-decoration-color: var(--color-febd69);
+  text-underline-offset: 8px;
 }
