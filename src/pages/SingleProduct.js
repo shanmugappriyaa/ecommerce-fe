@@ -39,6 +39,7 @@ function SingleProduct() {
     }
   }, []);
 
+
   const uploadCart = () => {
     dispatch(
       addProdToCart({
@@ -168,9 +169,17 @@ function SingleProduct() {
                   </div>
                   <div className="d-flex align-items-center gap-15 ">
                     <div>
-                      <a href="">
-                        <AiOutlineHeart className="fs-5 me-2" /> Add to Wishlist
-                      </a>
+                      
+                      <button
+                  className="border-0 bg-transparent"
+                  onClick={(e) => {
+                    addToWish( productState?._id);
+                  }}
+                >
+              
+                  <AiOutlineHeart className="fs-5 me-2"/> Add to Wishlist
+                </button>
+                      
                     </div>
                   </div>
                 </div>
