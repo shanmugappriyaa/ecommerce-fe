@@ -329,6 +329,7 @@ export const authSlice = createSlice({
         state.isSuccess = true;
         state.deleteCart = action.payload;
         state.orderedProduct = null;
+        state.cartProduct = null;
       })
       .addCase(deleteUserCart.rejected, (state, action) => {
         state.isLoading = false;
@@ -367,7 +368,7 @@ export const authSlice = createSlice({
         state.orderedProduct = action?.payload;
         console.log("action.payload------>", action?.payload);
         if (state.isSuccess === true) {
-          toast.success("Ordered Successfully");
+          // toast.success("Ordered Successfully");
         }
       })
       .addCase(createAnOrder.rejected, (state, action) => {

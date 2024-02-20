@@ -24,6 +24,10 @@ function Header() {
         Number(cartState[index].quantity) * Number(cartState[index].price);
       setTotal(sum);
     }
+    
+    if (!cartState || cartState?.length == 0) {
+      setTotal(0);
+    }
   }, [cartState]);
   const handleLogout = () => {
     localStorage.clear();

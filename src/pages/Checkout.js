@@ -5,9 +5,10 @@ import axios from "axios";
 import Container from "../components/Container";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { getConfig } from "../utils/axiosConfig";
+import { base_url, getConfig } from "../utils/axiosConfig";
 import { useDispatch, useSelector } from "react-redux";
 import { createAnOrder, deleteUserCart } from "../features/user/userSlice";
+import { toast } from "react-toastify";
 
 const shippingSchema = Yup.object({
   firstname: Yup.string().required("FirstName is Required"),
@@ -108,7 +109,7 @@ function Checkout() {
       return;
     }
     const result = await axios.post(
-      "http://localhost:8000/user/order/checkout",
+      base_url + "user/order/checkout",
       { amount: orderInfo.totalPrice, orderId: orderInfo._id },
       getConfig()
     );
@@ -141,7 +142,7 @@ function Checkout() {
         console.log("inside------------> data", data);
 
         const result = await axios.post(
-          "http://localhost:8000/user/order/paymentVerification",
+          base_url + "user/order/paymentVerification",
           data,
           getConfig()
         );
@@ -151,7 +152,9 @@ function Checkout() {
           razorpayPaymentId: response.razorpay_payment_id,
           razorpayOrderId: response.razorpay_order_id,
         });
+        toast.success("Order Created Successfully");
         dispatch(deleteUserCart());
+        navigate("/myorders");
       },
       prefill: {
         name: "ShanMart",

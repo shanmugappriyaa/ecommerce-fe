@@ -39,7 +39,6 @@ function SingleProduct() {
     }
   }, []);
 
-
   const uploadCart = () => {
     dispatch(
       addProdToCart({
@@ -75,8 +74,12 @@ function SingleProduct() {
             <div className="main-product-image">
               <div>
                 {/* <ReactImageZoom {...props} /> */}
-               <img src={productState?.images[0]?.url
-      && productState.images[0].url} alt=" product image"  />
+                <img
+                  src={
+                    productState?.images[0]?.url && productState.images[0].url
+                  }
+                  alt=" product image"
+                />
               </div>
             </div>
           </div>
@@ -169,17 +172,14 @@ function SingleProduct() {
                   </div>
                   <div className="d-flex align-items-center gap-15 ">
                     <div>
-                      
                       <button
-                  className="border-0 bg-transparent"
-                  onClick={(e) => {
-                    addToWish( productState?._id);
-                  }}
-                >
-              
-                  <AiOutlineHeart className="fs-5 me-2"/> Add to Wishlist
-                </button>
-                      
+                        className="border-0 bg-transparent"
+                        onClick={(e) => {
+                          addToWish(productState?._id);
+                        }}
+                      >
+                        <AiOutlineHeart className="fs-5 me-2" /> Add to Wishlist
+                      </button>
                     </div>
                   </div>
                 </div>
