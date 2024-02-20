@@ -33,7 +33,8 @@ function Header() {
     localStorage.clear();
     dispatch(auth_reset());
 
-    window.location.reload();
+    // window.location.reload();
+    navigate('/login')
   };
 
   return (
