@@ -8,3 +8,6 @@ Features
 **Shopping Cart:** Add products to a shopping cart for convenient checkout.
 **Order Management:** View and manage orders, including order history and order tracking.
 **Payment Gateway Integration:** Integration with a payment gateway for secure online payments.
+
+Sample **Username**:saran@gmail.com
+**password**:saran@123
