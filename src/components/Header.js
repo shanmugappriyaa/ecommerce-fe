@@ -15,6 +15,8 @@ function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const authState = useSelector((state) => state.auth);
+  const [user, setUser] = useState(authState?.user);
+
   const cartState = useSelector((state) => state?.auth?.cartProduct);
   useEffect(() => {
     let sum = 0;
@@ -24,7 +26,7 @@ function Header() {
         Number(cartState[index].quantity) * Number(cartState[index].price);
       setTotal(sum);
     }
-    
+
     if (!cartState || cartState?.length == 0) {
       setTotal(0);
     }
@@ -32,11 +34,12 @@ function Header() {
   const handleLogout = () => {
     localStorage.clear();
     dispatch(auth_reset());
-
-    // window.location.reload();
-    navigate('/login')
+    navigate("/login");
   };
 
+  useEffect(() => {
+    setUser(authState?.user);
+  }, [authState]);
   return (
     <>
       <header className="header-top-strip py-3 px-4">
@@ -95,17 +98,17 @@ function Header() {
                 </div>
                 <div>
                   <Link
-                    to={authState?.user === null ? "/login" : "/my-profile"}
+                    to={user === null ? "/login" : "/my-profile"}
                     className="d-flex align-items-center gap-10 text-white"
                   >
                     <BiUserCircle className="header-icon" />
-                    {authState?.user === null ? (
+                    {user === null ? (
                       <p className="mb-0">
                         Log in <br /> My Account
                       </p>
                     ) : (
                       <p className="mb-0">
-                        Welcome <br /> {authState?.user?.firstname}
+                        Welcome <br /> {user?.firstname}
                       </p>
                     )}
                   </Link>
@@ -129,7 +132,7 @@ function Header() {
           </div>
         </div>
       </header>
-      {authState?.user && (
+      {user && (
         <header className="header-bottom py-3 px-4">
           <div className="container-xxl">
             <div className="row">

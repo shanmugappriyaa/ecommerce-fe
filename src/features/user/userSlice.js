@@ -3,7 +3,6 @@ import { authService } from "./userService";
 
 import { toast } from "react-toastify";
 
-
 export const registerUser = createAsyncThunk(
   "auth/register",
   async (userData, thunkAPI) => {
@@ -142,7 +141,11 @@ export const authSlice = createSlice({
   initialState: initialState,
   reducers: {
     auth_reset: (state, action) => {
-      state.auth = undefined;
+      state.auth = null;
+      state.user = null;
+      state.deleteCart = null;
+      state.orderedProduct = null;
+      state.cartProduct = null;
     },
   },
   extraReducers: (builder) => {
@@ -187,8 +190,9 @@ export const authSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
+        console.log("action.payload",action.payload)
         if (state.isError === true) {
-          toast.error(action?.payload?.response?.data?.message);
+          toast.error(action?.payload?.response?.data?.msg);
         }
       })
       .addCase(getUserProductWishlist.pending, (state) => {
